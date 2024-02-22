@@ -1,12 +1,10 @@
 import React from 'react'
-import AddCards from '../Cards/AddCards'
+import AddCard from '../Cards/AddCard'
+import DeckView from '../Deck/DeckView'
 
 
 /* still unsure : 
     - figure out how to reference deck name
-    
-
-
 */
 
 /* done : 
@@ -15,18 +13,18 @@ import AddCards from '../Cards/AddCards'
 */
 
 
-function AddCardForm({ decks,  handleDone, handleSave }) {
+function AddCardForm({ decks }) {
 
     return (
         <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">{deck.name}</a></li> {/*figure out how to get deck name */}
+                <li class="breadcrumb-item"><a href="#">{decks.name}</a></li> {/*figure out how to get deck name */}
                 <li class="breadcrumb-item active" aria-current="page">Add Card</li>
             </ol>
         </nav>
-        <h2>{deck.name}: Add Card</h2>
+        <h2>{decks.name}: Add Card</h2>
         <form>
             <div className='row'>
                 <div className='col-12'>
@@ -58,14 +56,20 @@ function AddCardForm({ decks,  handleDone, handleSave }) {
                 </div>
             </div>
         </form>
+    </div>
+    )
+}
+
+/* want this in the form file but not sure how to use handleDone and handleSave functions in this file 
+
         <div>
             <div className='row'>
                 <div className='col'>
                     <button onClick={handleDone} className='btn btn-secondary text-left'>Done</button>
-                    <button onClick={handleSave} className='btn btn-primary text-left'>Save</button> {/* text right or float right ?  */}
+                    <button onClick={handleSave} className='btn btn-primary text-left'>Save</button> 
+                    </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    )
-}
+*/
+
+export default AddCardForm

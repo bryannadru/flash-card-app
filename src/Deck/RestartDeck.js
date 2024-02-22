@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom'
 import DeckVeiw from './DeckView'
 
 // kind of done -- go over in chat 
-function RestartDeck({ setCards }) { // do i need to add cards in prop
+function RestartDeck({ cards, setCards }) { // do i need to add cards in prop
 
     const [isFinished, setIsFinished] = useState(false)
+    const [currentCardIndex, setCurrentCardIndex] = currentCardIndex(0)
 
     const finishTask = () => {
-        if (window.confirm('Restart Cards? Click cancel to return to the home page.' )) {
-            setIsFinished(true)
-        }
+        setIsFinished(true)
     }
 
-
+    // go over this 
     const restartTask = () => {
-        setIsFinished(false)
-        setCards(0)
+        if (window.confirm('Restart Cards? Click cancel to return to the home page.' )) {
+            setIsFinished(false)
+            setCurrentCardIndex(0)
+        }
     }
 
     return (
@@ -28,6 +29,7 @@ function RestartDeck({ setCards }) { // do i need to add cards in prop
             )}
         </div>
     )
+    // need to style ^ 
 }
 
 

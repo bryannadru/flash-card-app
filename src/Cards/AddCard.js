@@ -1,65 +1,50 @@
-import React, { useState } from 'react'
-import { useHistory, useParams, BrowserRouter as Router, Link, Switch } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useParams, BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
 import { readDeck, createCard } from '../utils/api/index'
 import DeckView from '../Deck/DeckView'
+import AddCardForm from '../Forms/AddCardForm'
+    /* REVIEWED AND REVISED  */
 
-
-function AddCard({ card, setCards, decks, setDeck }) {
-    /* still unsure : 
-    - map over decks to form deckList ?
-    - save handler  --> need to go over function 
-    - do i need to use createCard api??
-    */
-
-    /*
-    done --> 
-    - form 
-    - useEffect 
-    - breadcrumb
-        - done handler 
-     - useEffect to load all decks
-     - route path  
-    - use readDeck to load deck to add card 
-    - import readDeck function  
-    
-    */
-
-
-    // using flashcard state from parent --> cards, setFlashCard
-
+    // using flashcard state from parent in DeckView --> cards, setFlashCard
+function AddCard({ cards, setCards, decks, setDecks }) {
 
     let history = useHistory() 
     const { deckId } = useParams()
 
     const initialFormState = {
         front: '',
-        back: ''
+        back: '' // and back: '' ??
     }
 
-    const [card, setNewCard] = useState()
+    const [formData, setFormData] = useState(initialFormState)
 
     useEffect(() => {
         async function loadDeck() {
-            const deckFromAPI = await readDeck()
-            setDeck(deckFromAPI)
+            try {
+                const deckFromAPI = await readDeck(deckId)
+                setDecks(deckFromAPI)
+            } catch(error) {
+                console.error('There was an error reading the deck: ', error)
+            }
         }
         loadDeck()
     }, [deckId])
 
-    // handle save button 
-    // review the addNewCard function 
     async function handleSave(event) {
         event.preventDefault() 
-        const newCard = {
-            ...card,
-            front: cards.front,
-            back: cards.back
+        try {
+            const newCard = {
+                ...cards,
+                front: cards.front,
+                back: cards.back
+            }
+            await createCard(deckId, newCard)
+            setCards(initialFormState)
+        } catch(error) {
+            console.error('Error saving card: ', error)
         }
-        await createCard(newCard)
-        setNewCard(initialFormState)
     }
 
-    // handle done button 
     const handleDone = () => {
         history.push(`/decks/${deckId}`)
     }
@@ -68,10 +53,19 @@ function AddCard({ card, setCards, decks, setDeck }) {
         <div>
         <Router>
             <Switch>
-                <Route exact path={`/decks/:deckId/cards/new`}></Route> {/* does this need to be a dynamic route */}
+                <Route exact path={`/decks/${deckId}/cards/new`}>
+                    <AddCardForm />
+                </Route>
             </Switch>
         </Router>
-        <AddCardForm />
+        <div>
+            <div className='row'>
+                <div className='col'>
+                    <button onClick={handleDone} className='btn btn-secondary text-left'>Done</button>
+                    <button onClick={handleSave} className='btn btn-primary text-left'>Save</button> {/* text right or float right ?  */}
+                </div>
+            </div>
+        </div>
       </div>
     )
 }

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import { readDeck, updateDeck } from '../utils/api/index'
+import DeckView from './DeckView'
 
-
-function EditDeck() {
+// REVIEWED AND REVISED 
+function EditDeck({ decks, setDecks }) {
 
     const history = useHistory()
     const { deckId } = useParams()
 
-    const [existingDeck, setExistingDeck] = useState('')
+    //const [existingDeck, setExistingDeck] = useState(deckId)
 
     useEffect(() => {
         async function loadDeck() {
@@ -24,53 +25,62 @@ function EditDeck() {
 
     // is this right 
     const handleChange = (event) => {
-        // setExistingDeck(event.target.value)
         event.preventDefault()
-        setExistingDeck({
-            ...existingDeck,
-            [target.id]: target.value
+        setDecks({
+            ...decks,
+            name: event.target.value
         })
     }
 
-
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        newDeck({
+            ...decks,
+            name: decks.name,
+            description: decks.description
+        })
+        updateDeck(deckId, newDeck)
+        history.push(`/decks/${deckId}`)
+    }
 
     // Route=/decks/:deckId/edit
     return (
         <div>
-                    <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">{deck.name}</a></li> {/* edit this deck.name */}
-                        <li class="breadcrumb-item active" aria-current="page">Data</li>
-                    </ol>
-                    </nav>           
-                    <h1>Edit Card</h1>
-                    <form>
-                        <div class="form-group">
-                            <label for="front">Front</label>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                id="formGroupExampleInput" 
-                                placeholder={deck.description} // figure out how to reference the deck description 
-                                value={existingDeck}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="back">Back</label>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                id="formGroupExampleInput2" 
-                                placeholder={deck.description} // figure out how to reference the deck description
-                                value={existingDeck}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </form>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">{decks.name}</a></li> {/* deckId.name ? */}
+                    <li class="breadcrumb-item active" aria-current="page">Edit Deck</li>
+                </ol>
+            </nav>           
+            <h1>Edit Card</h1>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name"
+                        placeholder={deckId.name} // figure out how to reference the deck description 
+                        value={decks.name}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="back" 
+                        name="description"
+                        placeholder={deckId.description} // figure out how to reference the deck description
+                        value={decks.description}
+                        onChange={handleChange}
+                    />
+                </div>
+            </form>
                     <button onSubmit={handleCancel}type="button">Cancel</button>
-                    <button onSubmit={handleChange} type="submit">Submit</button>
+                    <button onSubmit={handleSubmit} type="submit">Submit</button>
                     <Router>
                         <Switch>
                             <Route exact path={`decks/${deckId}/edit`} />

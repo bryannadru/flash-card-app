@@ -5,55 +5,48 @@ import Deck from './Deck'
 import DeckList from './DeckList'
 // need to add Routes in all files !!!!
 // first page listing all decks --> home page
-
 // this file needs to show a list of Decks !!!
 
 // is deck and cards the right way to reference 
 function DeckView() {
-
-    /* 
-    done 
-    - layout 
-    - links to every button 
-    - need to figure out how to reference deck.name and card.length correctly 
-    - need to list all decks
-    */
-
     const { deckId } = useParams()
     const history = useHistory()
 
     // sets the deck useState --> parent state 
-    const [decks, setDecks] = useState()
-    const [cards, setCards] = useState() 
+    const [decks, setDecks] = useState('')
+    const [cards, setCards] = useState('') 
 
     // delete a deck 
     const handleDelete = (id) => {
-        if (window.confirm("Do you really want to delete this deck?")) {
-            deleteDeck(deckId);
+        if (window.confirm('Do you really want to delete this deck? You will not be able to recover it.')) {
+            deleteDeck(id);
             
         setDecks((updatedDeck) => 
-            updatedDeck.filter((deck) => deck.id !== id))
-        history.push('/')
-        }    
+            updatedDeck.filter((deck) => deck.id !== id)) // creates a new array with all decks that do not match id
+            // updates the state to not include deleted deck id  
+        history.push('/')      
     }
 
     return (
-    <div>
-        <Router>
-            <Switch>
-                <Route exact path='/' component={DeckView}></Route> {/* is this right */}
-            <Link to='/decks/new'>
-            <button 
-            type="button" 
-            className="btn btn-secondary text-left"> {/* is this left correct */}
-                + Create Deck
-            </button>
-            </Link>
+        <div>
+            <Router>
+                <Switch>
+                    <Route exact path='/'>
+                        <DeckView />
+                    </Route>
+                <Link to='/decks/new'>
+                <button 
+                type="button" 
+                className="btn btn-secondary text-left"> {/* is this left correct */}
+                    + Create Deck
+                </button>
+                </Link>
+                </Switch>
+            </Router>
             <DeckList />
-            </Switch>
-        </Router>
-    </div>
-    )
+        </div>
+        )
+    }
 }
 
 {/* <Link className="btn btn-primary mx-1" to={`/decks/${deck.id}/study`} >Study</Link>

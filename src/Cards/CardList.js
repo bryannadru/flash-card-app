@@ -1,18 +1,9 @@
 import React from 'react'
 import DeckView from '../Deck/DeckView'
 
-// done, just need to debug 
-/*
-- done : 
-    - card heading 
-    - questions and answer 
-    - edit button with link to edit screen 
-    - delete button with button to delete 
-    - need to define what is displayed on the front & back of card 
-*/
+// REVIEWED AND REVISED 
 
 function CardList({ cards, setCards }) {
-
     if (cards) {
         return (
             cards.map((card) => (

@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory, Link } from 'react-router-dom'
+import { useParams, useHistory, Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import { readDeck, readCard, updateCard } from '../utils/api/index'
-import Study from './Study'
-import AddCard from './AddCard'
+import DeckView from '../Deck/DeckView'
 import EditCardForm from '../Forms/EditCardForm'
+//import DeckStudy from './Deck/DeckStudy'
+//import AddCard from './AddCard'
 
-function EditCard({ decks, setDeck, card, setFlashCards }) {
 
+// REVIEWED AND REVISED -- JUST NEED TO CONFIRM 
 
-    /* done : 
-        - route paths 
-        - use readDeck() function with useEffect() 
-        - need to laod the deck that contains card need to edi t
-        - use readCard() function to read card want to edit 
-            - if clicks submit or cancel, user goes to home screen 
-        - breadcrumb in form file 
-    */
-
-    /* still need to figure out  : 
-    - edit and update card 
-    
-    */
-
+function EditCard({ decks, setDecks, cards, setCards }) {
 
     const history = useHistory() 
     const { cardId, deckId } = useParams()
@@ -31,23 +19,22 @@ function EditCard({ decks, setDeck, card, setFlashCards }) {
         async function loadDecksAndCards() {
             try {
                 const decksFromAPI = await readDeck()
-                setDeck(decksFromAPI)
+                setDecks(decksFromAPI)
 
                 const cardsFromAPI = await readCard()
-                setFlashCards(cardsFromAPI)
+                setCards(cardsFromAPI)
             } catch (error) {
                 throw new Error(`Read deck had an error(${deckId}).`)
-                // do i need this 
             }
         }
         loadDecksAndCards()
     }, [deckId, cardId])
 
-    // ask about this in chat tomorrow 
-    const handleChange = ({target}) => {
-        setFlashCards({
-            ...card,
-            [target.name]: [target.value]
+    // not 100% sure 
+    const handleChange = ({ target }) => {
+        setCards({
+            ...cards,
+            [target.name]: target.value
         })
     }
 
@@ -55,11 +42,11 @@ function EditCard({ decks, setDeck, card, setFlashCards }) {
     async function handleSubmit(event) {
         event.preventDefault() 
         const newCard = {
-            ...card,
-            front: card.front,
-            back: card.back
+            ...cards,
+            front: cards.front,
+            back: cards.back
         }
-        await updateCard(newCard) // updateCard is from index.js 
+        await updateCard(cardId, newCard) // updateCard is from index.js 
         history.push(`/decks/${deckId}`)
     }
 
@@ -71,10 +58,13 @@ function EditCard({ decks, setDeck, card, setFlashCards }) {
         <div>
             <Router>
                 <Switch>
-                    <Route path={`/decks/${deckId}/cards/new`}></Route>
+                    {/*<Route path={`/decks/${deckId}/cards/new`} /> */}
+                    <Route path={`/decks/${deckId}/cards/${cardId}/edit`}>
+                        <EditCard />
+                    </Route>
                 </Switch>
             </Router>
-            <EditCardForm /> {/* do i need to add anything else to this */}
+            <EditCardForm />
         </div>
     )
 }
