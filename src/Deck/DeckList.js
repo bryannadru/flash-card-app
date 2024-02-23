@@ -20,7 +20,11 @@ function DeckList({ decks, handleDelete }) { // figure out the handle delete btn
                                 View
                             </button>
                         </Link>
-                        <Link to={`/decks/${deckId}/study`}><button className="btn btn-primary bi bi-book text-left">Study</button></Link>
+                        <Link to={`/decks/${deckId}/study`}>
+                            <button className="btn btn-primary bi bi-book text-left">
+                                Study
+                            </button>
+                        </Link>
                         <button 
                             className='btn btn-danger bi bi-trash3-fill text-right'
                             onClick={() => handleDelete(deck.id)}> {/* is this right or () => deleteDeck(deckId)*/}

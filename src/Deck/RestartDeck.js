@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import DeckVeiw from './DeckView'
 
-// kind of done -- go over in chat 
+// REVIEWED AND REVISED -- needs corrections 
 function RestartDeck({ cards, setCards }) { // do i need to add cards in prop
 
     const [isFinished, setIsFinished] = useState(false)

@@ -1,8 +1,8 @@
 import React from 'react'
+//import { ErrorBoundary } from 'react-error-boundary'
 import DeckView from '../Deck/DeckView'
 
 // REVIEWED AND REVISED 
-
 function CardList({ cards, setCards }) {
     if (cards) {
         return (

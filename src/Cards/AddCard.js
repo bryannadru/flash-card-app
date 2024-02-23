@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useParams, BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
+import { useHistory, useParams, BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { readDeck, createCard } from '../utils/api/index'
+import { ErrorBoundary } from 'react-error-boundary'
 import DeckView from '../Deck/DeckView'
 import AddCardForm from '../Forms/AddCardForm'
     /* REVIEWED AND REVISED  */
@@ -51,6 +52,7 @@ function AddCard({ cards, setCards, decks, setDecks }) {
 
     return (
         <div>
+        <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
         <Router>
             <Switch>
                 <Route exact path={`/decks/${deckId}/cards/new`}>
@@ -66,6 +68,7 @@ function AddCard({ cards, setCards, decks, setDecks }) {
                 </div>
             </div>
         </div>
+        </ErrorBoundary>
       </div>
     )
 }

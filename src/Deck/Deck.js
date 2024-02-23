@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, Link, BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { readDeck, deleteDeck, deleteCard } from '../utils/api/index'
+import { ErrorBoundary } from 'react-error-boundary'
 import DeckView from './DeckView'
 import CardList from '../Cards/CardList'
 //import DeckStudy from './DeckStudy'
@@ -39,13 +40,14 @@ function Deck({ decks, setDecks, cards, setCards }) {
     // const list all cards : 
     return (
         <div>
+            <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{decks.name}</li>
                 </ol>
             </nav>
-            <h3>{decks.name}</h3>
+            <h3>{decks.name}</h3> {/* deckId.name ?? */}
             <p>{decks.description}</p>
             <Link to={`/decks/${deckId}/edit`}>
                 <button className='btn btn-secondary'>
@@ -80,6 +82,7 @@ function Deck({ decks, setDecks, cards, setCards }) {
                     </Route>
                 </Switch>
             </Router>
+            </ErrorBoundary>
         </div>
     )
 }

@@ -1,32 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { readDeck } from '../utils/api/index'
-// import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'url'
 import DeckView from './DeckView'
+import DeckList from './DeckList' // do i need 
 import RestartDeck from './RestartDeck'
 import NotEnoughCards from '../Cards/NotEnoughCards'
 
-
-// need to do next button 
-// should i do a separate file for the back of the button ? 
-// need to import list decks 
-
-/*
-    - to do : 
-    - check the states that are being used 
-    - need to check if rendering title is correct
-    - cards shown one at a time, front side first 
-        - is this done with flip function ? 
-    - next button for back of card 
-
-    done 
-    - breadcrumb 
-    - deck title 
-*/
-
-function DeckStudy({ cards, setCards, decks, setDeck, handleDelete}) {
+// REVISED AND REVIEWED -- need to look over 
+function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
     const history = useHistory()
     const { deckId } = useParams()
+    const [cardIndex, setCardIndex] = useState(0)
 
     /* const initialFlashCardState = {
         cardNumber: 1,
@@ -37,42 +22,25 @@ function DeckStudy({ cards, setCards, decks, setDeck, handleDelete}) {
     useEffect(() => {
         async function loadDecks() {
            // to we need readDeck 
-        
            const decksFromAPI = await readDeck()
-           setDeck(decksFromAPI)
+           setDecks(decksFromAPI)
         }
         loadDecks()
     }, []) 
 
-    // does this need to be useState(initialFlashCard)
     const cardFront = cards.front
     const cardBack = cards.back
     const [flip, setFlipped] = useState(false)
 
-
-    // flips card
-    // will this show the back of the card ??
     const handleFlip = () => {
         setFlipped(!flip)
     }
     // handles next button 
     const handleNext = () => {
-        if (setCards < cards.length - 1) {
-            setCards(cards + 1)
-        } /*else {
-            setFlashCards(0) // restarts cards -- do i need this bc RestartDeck handles the rest?
-        } */
+        if (cardIndex < cards.length - 1) // checks the length if the cards {
+            setCardIndex(cardIndex + 1)
+        }
     }
-
-    // need to do back of card 
-    // next button appears after card is flipped 
-
-
-
-    // include breadcrumb -- bootstrap 
-    // links to home 
-    // need to implement back of cards 
-    // and include study.js
 
     return (
         <div>
@@ -82,26 +50,26 @@ function DeckStudy({ cards, setCards, decks, setDeck, handleDelete}) {
                         <DeckStudy />
                     </Route>
                 </Switch>
+            </Router>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item">
                         <Link to={`/decks/:deckId`}></Link>
-                        {decks.name} {/* name of the current deck */}
+                        {deckId.name} {/* need to figure this out  */}
                     </li> 
                     <li class="breadcrumb-item active" aria-current="page">Study</li>
                 </ol>
             </nav>
             <Link to={`/decks/${deckId}/study`}></Link>
-            <h1>Study: {decks.name}</h1>
+            <h1>Study: {deckId.name}</h1>
             <div>
-                {flip ? (
+                {flip ? ( 
                 <div class="card w-75">
                 <div class="card-body">
                     {/* need to adjust the numbers to active numbers */}
                     <h5 class="card-title">Card {cards.id} of {cards.length}</h5>
-                    <p class="card-text">{cards.description}</p>
-                    <div>{cardBack}</div>
+                    <p class="card-text">{cards.back}</p>
                     <button 
                     className="btn btn-secondary"
                     onClick={handleFlip}
@@ -120,8 +88,8 @@ function DeckStudy({ cards, setCards, decks, setDeck, handleDelete}) {
                     <div class="card w-75">
                     <div class="card-body">
                         {/* need to adjust the numbers to active numbers */}
-                        <h5 class="card-title">Card {cards.id} of 3</h5>
-                        <p class="card-text">{cards.description}</p>
+                        <h5 class="card-title">Card {cards.id} of {cards.length}</h5>
+                        <p class="card-text">{cards.front}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}
@@ -131,10 +99,9 @@ function DeckStudy({ cards, setCards, decks, setDeck, handleDelete}) {
                     </div>
                 </div>
                 )}
-                <RestartDeck component={RestartDeck}/> {/* is this the right place to put this */}
-                <NotEnoughCards component={NotEnoughCards}/>
+                <RestartDeck /> {/* is this the right place to put this */}
+                <NotEnoughCards />
             </div>
-            </Router>
         </div>
     )
 }
