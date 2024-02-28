@@ -6,6 +6,7 @@ import DeckView from './DeckView'
 // REVIEWED AND REVISED 
 function EditDeck({ decks, setDecks }) {
 
+    // change state 
     const history = useHistory()
     const { deckId } = useParams()
 
@@ -14,7 +15,7 @@ function EditDeck({ decks, setDecks }) {
     useEffect(() => {
         async function loadDeck() {
             const deckFromAPI = await readDeck(deckId)
-            setExistingDeck(deckFromAPI)
+            setDecks(deckFromAPI)
         }
     }, [deckId])
 
