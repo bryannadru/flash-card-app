@@ -6,8 +6,6 @@ function CreateDeckForm() {
     <div>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          {" "}
-          {/*  is this correct to link back to home */}
           <li class="breadcrumb-item">
             <a href="/">Home</a>
           </li>

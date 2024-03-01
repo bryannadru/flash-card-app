@@ -23,16 +23,22 @@ function DeckView() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController()
     async function loadDecks() {
       try {
-        const decksFromAPI = await readDeck();
-        //console.log(decksFromAPI)
+        const decksFromAPI = await readDeck({ signal: abortController.signal });
         setDecks(decksFromAPI);
       } catch (error) {
-        console.error("Something went wrong", error);
+        if (error.name === 'AbortError') {
+          console.log('Aborted', deckId)
+        } else {
+          throw error 
+        }
       }
     }
     loadDecks();
+
+    return () => abortController.abort()
   }, []);
 
   // delete a deck

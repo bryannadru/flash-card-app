@@ -1,9 +1,28 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { deleteDeck } from "../utils/api/index";
 import DeckView from './DeckView'
 
 // REVIEWED AND REVISED 
-function DeckList({ decks, handleDelete }) { // figure out the handle delete btn 
+function DeckList({ decks, setDecks }) { // figure out the handle delete btn 
+
+    const history = useHistory()
+    const handleDelete = (id) => {
+        if (
+          window.confirm(
+            "Do you really want to delete this deck? You will not be able to recover it."
+          )
+        ) {
+          deleteDeck(id);
+    
+          setDecks((updatedDeck) =>
+            // setDecks(decks => decks.filter(deck => deck.id !== id));
+            updatedDeck.filter((deck) => deck.id !== id)
+          ); // creates a new array with all decks that do not match id
+          // updates the state to not include deleted deck id
+          history.push("/");
+        }
+      };
     
     const { deckId } = useParams()
     
