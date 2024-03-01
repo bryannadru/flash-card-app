@@ -67,13 +67,13 @@ function DeckView() {
 
   return (
       <div>
-            <button 
+          <Route exact path="/">
+          <button 
               type="button" 
               onClick={handleClick}
-              className="m-2 btn btn-secondary text-left">
+              className="m-2 btn btn-secondary float-left">
               + Create Deck
             </button>
-          <Route exact path="/">
             <DeckList decks={decks} onDelete={handleDelete} />
           </Route>
       </div>

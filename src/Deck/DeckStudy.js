@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { readDeck } from '../utils/api/index'
-import { fileURLToPath } from 'url'
 import DeckView from './DeckView'
 import DeckList from './DeckList' // do i need 
 import RestartDeck from './RestartDeck'
 import NotEnoughCards from '../Cards/NotEnoughCards'
 
 // REVISED AND REVIEWED -- need to look over 
-function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
+function DeckStudy({ cards, setCards, decks, setDecks }) {
     const history = useHistory()
     const { deckId } = useParams()
     const [cardIndex, setCardIndex] = useState(0)
@@ -22,14 +21,12 @@ function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
     useEffect(() => {
         async function loadDecks() {
            // to we need readDeck 
-           const decksFromAPI = await readDeck()
+           const decksFromAPI = await readDeck(deckId)
            setDecks(decksFromAPI)
         }
         loadDecks()
-    }, []) 
+    }, [deckId]) 
 
-    const cardFront = cards.front
-    const cardBack = cards.back
     const [flip, setFlipped] = useState(false)
 
     const handleFlip = () => {
@@ -37,18 +34,15 @@ function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
     }
     // handles next button 
     const handleNext = () => {
-        if (cardIndex < cards.length - 1) // checks the length if the cards {
+        if (cardIndex < cards.length - 1) { 
             setCardIndex(cardIndex + 1)
         }
+        return null 
+        // handle restart here 
     }
 
     return (
         <div>
-            <Router>
-                <Switch>
-                    <Route path={`/decks/${deckId}/study`} component={<DeckStudy />}/>
-                </Switch>
-            </Router>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -66,7 +60,7 @@ function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
                 <div class="card w-75">
                 <div class="card-body">
                     {/* need to adjust the numbers to active numbers */}
-                    <h5 class="card-title">Card {cards.id} of {cards.length}</h5>
+                    <h5 class="card-title">Card {cardIndex + 1} of {cards.length}</h5>
                     <p class="card-text">{cards.back}</p>
                     <button 
                     className="btn btn-secondary"
@@ -86,19 +80,18 @@ function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
                     <div class="card w-75">
                     <div class="card-body">
                         {/* need to adjust the numbers to active numbers */}
-                        <h5 class="card-title">Card {cards.id} of {cards.length}</h5>
+                        <h5 class="card-title">Card {cardIndex + 1} of {cards.length}</h5>
                         <p class="card-text">{cards.front}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}
                         >
-                        Flip
+                            Flip
                         </button>
                     </div>
                 </div>
                 )}
-                <RestartDeck /> {/* is this the right place to put this */}
-                <NotEnoughCards />
+                {/* <RestartDeck /> <NotEnoughCards /> */}
             </div>
         </div>
     )

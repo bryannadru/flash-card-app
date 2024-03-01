@@ -1,22 +1,48 @@
 import React from "react";
-import { Switch, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import DeckView from "../Deck/DeckView";
+import CreateDeck from "../Deck/CreateDeck";
+import DeckStudy from "../Deck/DeckStudy";
+import EditDeck from "../Deck/EditDeck";
+import Deck from "../Deck/Deck";
+import AddCard from "../Cards/AddCard";
+import EditCard from "../Cards/EditCard";
 
 function Layout() {
   return (
     <div>
       <Header />
       <div className="container">
-        <Switch>
-          <Route path="/">
-            <DeckView />
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <DeckView />
+            </Route>
+            <Route path="/decks/new">
+              <CreateDeck />
+            </Route>
+            <Route path="/decks/:deckId/study">
+              <DeckStudy />
+            </Route>
+            <Route path="/decks/:deckId/edit">
+              <EditDeck />
+            </Route>
+            <Route path="/decks/:deckId">
+              <Deck />
+            </Route>
+            <Route path="/decks/:deckId/cards/new">
+              <AddCard />
+            </Route>
+            <Route path="/decks/:deckId/cards/:cardId/edit">
+              <EditCard />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     </div>
   );

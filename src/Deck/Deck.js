@@ -8,7 +8,6 @@ import {
   Route,
 } from "react-router-dom";
 import { readDeck, deleteDeck, deleteCard } from "../utils/api/index";
-import { ErrorBoundary } from "react-error-boundary";
 import DeckView from "./DeckView";
 import CardList from "../Cards/CardList";
 //import DeckStudy from './DeckStudy'

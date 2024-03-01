@@ -7,7 +7,6 @@ import {
   useHistory,
 } from "react-router-dom";
 import { createDeck } from "../utils/api/index";
-import DeckView from "./DeckView";
 import CreateDeckForm from "../Forms/CreateDeckForm";
 
 // REVIEWED -- need to figure out is it is decks.name or newDeck.name

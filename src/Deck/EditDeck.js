@@ -4,18 +4,18 @@ import { readDeck, updateDeck } from '../utils/api/index'
 import DeckView from './DeckView'
 
 // REVIEWED AND REVISED 
-function EditDeck({ decks, setDecks }) {
+function EditDeck() {
 
     // change state 
     const history = useHistory()
     const { deckId } = useParams()
 
-    //const [existingDeck, setExistingDeck] = useState(deckId)
+    const [existingDeck, setExistingDeck] = useState(deckId)
 
     useEffect(() => {
         async function loadDeck() {
             const deckFromAPI = await readDeck(deckId)
-            setDecks(deckFromAPI)
+            setExistingDeck(deckFromAPI)
         }
     }, [deckId])
 
@@ -27,18 +27,18 @@ function EditDeck({ decks, setDecks }) {
     // is this right 
     const handleChange = (event) => {
         event.preventDefault()
-        setDecks({
-            ...decks,
+        setExistingDeck({
+            ...existingDeck,
             name: event.target.value
         })
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        newDeck({
-            ...decks,
-            name: decks.name,
-            description: decks.description
+        const newDeck = ({ //newDeck ??
+            ...existingDeck,
+            name: existingDeck.name,
+            description: existingDeck.description
         })
         updateDeck(deckId, newDeck)
         history.push(`/decks/${deckId}`)
@@ -50,7 +50,7 @@ function EditDeck({ decks, setDecks }) {
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">{decks.name}</a></li> {/* deckId.name ? */}
+                    <li class="breadcrumb-item"><a href="#">{existingDeck.name}</a></li> {/* deckId.name ? */}
                     <li class="breadcrumb-item active" aria-current="page">Edit Deck</li>
                 </ol>
             </nav>           
@@ -63,7 +63,7 @@ function EditDeck({ decks, setDecks }) {
                         id="name" 
                         name="name"
                         placeholder={deckId.name} // figure out how to reference the deck description 
-                        value={decks.name}
+                        value={existingDeck.name}
                         onChange={handleChange}
                     />
                 </div>
@@ -75,7 +75,7 @@ function EditDeck({ decks, setDecks }) {
                         id="back" 
                         name="description"
                         placeholder={deckId.description} // figure out how to reference the deck description
-                        value={decks.description}
+                        value={existingDeck.description}
                         onChange={handleChange}
                     />
                 </div>

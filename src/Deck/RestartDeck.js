@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import DeckVeiw from './DeckView'
 
 // REVIEWED AND REVISED -- needs corrections 
-function RestartDeck({ cards, setCards }) { // do i need to add cards in prop
+function RestartDeck() { // do i need to add cards in prop
 
     const [isFinished, setIsFinished] = useState(false)
     const [currentCardIndex, setCurrentCardIndex] = currentCardIndex(0)

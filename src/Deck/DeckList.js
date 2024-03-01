@@ -36,17 +36,17 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
                         <h5 class="card-title">{deck.name}</h5>
                         <p class="card-text">{deck.description}</p>
                         <Link to={`/decks/${deck.id}`}>
-                            <button className="m-1 p-2 btn btn-primary bi bi-eye text-left">
+                            <button className="m-1 btn btn-primary bi bi-eye text-left">
                                 Study
                             </button>
                         </Link>
                         <Link to={`/decks/${deck.id}/study`}>
-                            <button className="m-1 p-2 btn btn-secondary bi bi-book float-left">
+                            <button className="m-1 btn btn-secondary bi bi-book float-left">
                                 View
                             </button>
                         </Link>
                         <button 
-                            className='m-1 p-2 btn btn-danger bi bi-trash3-fill float-right'
+                            className='m-1 btn btn-danger bi bi-trash3-fill float-right'
                             onClick={() => handleDelete(deck.id)}>
                                 Delete
                         </button> 
