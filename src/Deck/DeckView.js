@@ -6,7 +6,7 @@ import {
   useParams,
   useHistory,
 } from "react-router-dom";
-import { deleteDeck, readDeck } from "../utils/api/index";
+import { deleteDeck, listDecks } from "../utils/api/index";
 import DeckList from "./DeckList";
 import CreateDeck from "./CreateDeck";
 // need to add Routes in all files !!!!
@@ -26,12 +26,14 @@ function DeckView() {
     const abortController = new AbortController()
     async function loadDecks() {
       try {
-        const decksFromAPI = await readDeck({ signal: abortController.signal });
+        //console.log('hello')
+        const decksFromAPI = await listDecks(deckId, abortController.signal );
         setDecks(decksFromAPI);
       } catch (error) {
         if (error.name === 'AbortError') {
           console.log('Aborted', deckId)
         } else {
+          console.log(error)
           throw error 
         }
       }
@@ -68,7 +70,7 @@ function DeckView() {
             <button 
               type="button" 
               onClick={handleClick}
-              className="btn btn-secondary text-left">
+              className="m-2 btn btn-secondary text-left">
               + Create Deck
             </button>
           <Route exact path="/">

@@ -46,9 +46,7 @@ function DeckStudy({ cards, setCards, decks, setDecks, handleDelete}) {
         <div>
             <Router>
                 <Switch>
-                    <Route path={`/decks/${deckId}/study`}>
-                        <DeckStudy />
-                    </Route>
+                    <Route path={`/decks/${deckId}/study`} component={<DeckStudy />}/>
                 </Switch>
             </Router>
             <nav aria-label="breadcrumb">
