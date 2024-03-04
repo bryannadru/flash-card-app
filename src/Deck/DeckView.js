@@ -23,24 +23,24 @@ function DeckView() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    const abortController = new AbortController()
+    const abortController = new AbortController();
     async function loadDecks() {
       try {
         //console.log('hello')
-        const decksFromAPI = await listDecks(deckId, abortController.signal );
+        const decksFromAPI = await listDecks(deckId, abortController.signal);
         setDecks(decksFromAPI);
       } catch (error) {
-        if (error.name === 'AbortError') {
-          console.log('Aborted', deckId)
+        if (error.name === "AbortError") {
+          console.log("Aborted", deckId);
         } else {
-          console.log(error)
-          throw error 
+          console.log(error);
+          throw error;
         }
       }
     }
     loadDecks();
 
-    return () => abortController.abort()
+    return () => abortController.abort();
   }, []);
 
   // delete a deck
@@ -51,32 +51,37 @@ function DeckView() {
       )
     ) {
       deleteDeck(id);
-
-      setDecks((updatedDeck) =>
+      setDecks(currentDecks =>
         // setDecks(decks => decks.filter(deck => deck.id !== id));
-        updatedDeck.filter((deck) => deck.id !== id)
-      ); // creates a new array with all decks that do not match id
+        currentDecks.filter(deck => deck.id !== id)); 
+      // creates a new array with all decks that do not match id
       // updates the state to not include deleted deck id
       history.push("/");
     }
   };
 
   const handleClick = () => {
-    history.push('/decks/new')
-  }
+    history.push("/decks/new");
+  };
 
   return (
-      <div>
-          <Route exact path="/">
-          <button 
-              type="button" 
-              onClick={handleClick}
-              className="m-2 btn btn-secondary float-left">
-              + Create Deck
-            </button>
-            <DeckList decks={decks} onDelete={handleDelete} />
-          </Route>
-      </div>
+    <div>
+      <Route exact path="/">
+        <div>
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                onClick={handleClick}
+                className="m-2 btn btn-secondary float-left">
+                + Create Deck
+              </button>
+            </div>
+          </div>
+        </div>
+        <DeckList decks={decks}  setDecks={setDecks} onDelete={handleDelete} />
+      </Route>
+    </div>
   );
 }
 

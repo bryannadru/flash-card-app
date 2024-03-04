@@ -56,7 +56,7 @@ function CreateDeck() {
             <button
               onClick={handleCancel}
               type="button"
-              class="btn btn-secondary">
+              class="btn btn-secondary m-1">
               Cancel
             </button>
             <button

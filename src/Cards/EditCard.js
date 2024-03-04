@@ -18,10 +18,10 @@ function EditCard({ decks, setDecks, cards, setCards }) {
     useEffect(() => {
         async function loadDecksAndCards() {
             try {
-                const decksFromAPI = await readDeck()
+                const decksFromAPI = await readDeck(deckId)
                 setDecks(decksFromAPI)
 
-                const cardsFromAPI = await readCard()
+                const cardsFromAPI = await readCard(cardId)
                 setCards(cardsFromAPI)
             } catch (error) {
                 throw new Error(`Read deck had an error(${deckId}).`)
@@ -32,15 +32,7 @@ function EditCard({ decks, setDecks, cards, setCards }) {
 
     return (
         <div>
-            <Router>
-                <Switch>
-                    {/*<Route path={`/decks/${deckId}/cards/new`} /> */}
-                    <Route path={`/decks/${deckId}/cards/${cardId}/edit`}>
-                        <EditCard />
-                    </Route>
-                </Switch>
-            </Router>
-            <EditCardForm />
+            <p>hi</p>
         </div>
     )
 }

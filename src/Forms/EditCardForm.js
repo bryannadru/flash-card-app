@@ -38,7 +38,7 @@ function EditCardForm({ decks, setDecks, cards, setCards }) {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb"> {/* is home right */}
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item">{decks.name}</li> {/*figure out how to get deck name */}
+                <li class="breadcrumb-item"></li> {/*figure out how to get deck name */}
                 <li class="breadcrumb-item active" aria-current="page">Edit Card: {cardId}</li>
             </ol>
         </nav>

@@ -7,6 +7,7 @@ import DeckView from './DeckView'
 function DeckList({ decks, setDecks }) { // figure out the handle delete btn 
 
     const history = useHistory()
+    const { deckId } = useParams()
 
     const handleDelete = async (id) => {
         if (
@@ -24,8 +25,6 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
           history.push("/");
         }
       };
-    
-    const { deckId } = useParams()
     
     if (Array.isArray(decks)) {
         return (
