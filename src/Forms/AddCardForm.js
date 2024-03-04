@@ -2,16 +2,7 @@ import React from "react";
 import AddCard from "../Cards/AddCard";
 import DeckView from "../Deck/DeckView";
 
-/* still unsure : 
-    - figure out how to reference deck name
-*/
-
-/* done : 
-    - breadcrumb bar  
-    - heading 
-*/
-
-function AddCardForm({ newCard, setNewCard, decks, handleChange }) {
+function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
 
   return (
     <div>
@@ -21,7 +12,7 @@ function AddCardForm({ newCard, setNewCard, decks, handleChange }) {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href="#">{decks.name}</a>
+            <a href="#">{deck.name}</a>
           </li>{" "}
           {/*figure out how to get deck name */}
           <li className="breadcrumb-item active" aria-current="page">
@@ -29,8 +20,8 @@ function AddCardForm({ newCard, setNewCard, decks, handleChange }) {
           </li>
         </ol>
       </nav>
-      <h2>{decks.name}: Add Card</h2>
-      <form>
+      <h2>{deck.name}: Add Card</h2>
+      <form onSubmit={handleSave}>
         <div className="row">
           <div className="col-12">
             <div className="mb-3">

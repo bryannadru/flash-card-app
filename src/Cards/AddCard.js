@@ -34,6 +34,7 @@ function AddCard() {
     setNewCard({...newCard, deckId: deckId})
     createCard(deckId, newCard)
     setNewCard(initialFormState)
+    console.log(newCard)
   }
 
   const handleChange = (event) => {
