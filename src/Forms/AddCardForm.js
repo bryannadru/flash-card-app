@@ -11,19 +11,20 @@ import DeckView from "../Deck/DeckView";
     - heading 
 */
 
-function AddCardForm({ newCard, setNewCard, decks }) {
+function AddCardForm({ newCard, setNewCard, decks, handleChange }) {
+
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol clasName="breadcrumb">
+          <li className="breadcrumb-item">
             <a href="/">Home</a>
           </li>
-          <li class="breadcrumb-item">
+          <li className="breadcrumb-item">
             <a href="#">{decks.name}</a>
           </li>{" "}
           {/*figure out how to get deck name */}
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Add Card
           </li>
         </ol>
@@ -39,7 +40,10 @@ function AddCardForm({ newCard, setNewCard, decks }) {
                 type="front"
                 name="front"
                 class="form-control"
-                placeholder="Front side of card"></textarea>
+                placeholder="Front side of card"
+                value={newCard.front}
+                onChange={handleChange}>
+              </textarea>
             </div>
           </div>
         </div>
@@ -51,7 +55,10 @@ function AddCardForm({ newCard, setNewCard, decks }) {
                 id="back"
                 type="back"
                 name="back"
-                placeholder="Back side of card"></textarea>
+                placeholder="Back side of card"
+                value={newCard.back}
+                onChange={handleChange}>
+              </textarea>
             </div>
           </div>
         </div>

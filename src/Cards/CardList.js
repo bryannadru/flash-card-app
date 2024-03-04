@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { deleteCard } from "../utils/api";
 //import { ErrorBoundary } from 'react-error-boundary'
-import DeckView from "../Deck/DeckView";
+import Deck from "./Deck"
 
 // REVIEWED AND REVISED
 function CardList({ cards, setCards }) {

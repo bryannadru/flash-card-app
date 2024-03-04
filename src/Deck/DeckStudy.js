@@ -50,22 +50,22 @@ function DeckStudy() {
     return (
         <div>
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><a href="/">Home</a></li>
+                    <li className="breadcrumb-item">
                         <Link to={`/decks/:deckId`}>{decks.name}</Link>
                     </li> 
-                    <li class="breadcrumb-item active" aria-current="page">Study</li>
+                    <li className="breadcrumb-item active" aria-current="page">Study</li>
                 </ol>
             </nav>
             <Link to={`/decks/${deckId}/study`}></Link>
             <h1>Study: {decks.name}</h1>
             <div>
                 {flip ? ( 
-                <div class="card w-75">
-                <div class="card-body">
-                    <h5 class="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
-                    <p class="card-text">{cards.back}</p>
+                <div className="card w-75">
+                <div className="card-body">
+                    <h5 className="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
+                    <p className="card-text">{cards.back}</p>
                     <button 
                     className="btn btn-secondary"
                     onClick={handleFlip}
@@ -81,11 +81,11 @@ function DeckStudy() {
                     </div>
                 </div>
                 ) : (
-                    <div class="card w-75">
-                    <div class="card-body">
+                    <div className="card w-75">
+                    <div className="card-body">
                         {/* need to adjust the numbers to active numbers */}
-                        <h5 class="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
-                        <p class="card-text">{decks.name}</p>
+                        <h5 className="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
+                        <p className="card-text">{decks.name}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}

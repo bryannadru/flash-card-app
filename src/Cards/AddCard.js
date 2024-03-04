@@ -2,58 +2,48 @@ import React, { useState, useEffect } from "react";
 import {
   useHistory,
   useParams,
-  BrowserRouter as Router,
-  Switch,
-  Route,
 } from "react-router-dom";
-import { readDeck, createCard } from "../utils/api/index";
-import { ErrorBoundary } from "react-error-boundary";
-import DeckView from "../Deck/DeckView";
+import { createCard, readDeck } from "../utils/api/index";
 import AddCardForm from "../Forms/AddCardForm";
-/* REVIEWED AND REVISED  */
+//import DeckView from "../Deck/DeckView";
 
-// using flashcard state from parent in DeckView --> cards, setFlashCard
 function AddCard() {
+
   const initialFormState = {
     front: "",
     back: "", // and back: '' ??
   };
-
   let history = useHistory();
-  const { deckId, cardId } = useParams();
+  const { deckId } = useParams();
+  const [deck, setDeck] = useState([])
   const [newCard, setNewCard] = useState(initialFormState);
 
-    async function handleSave(event) {
-      event.preventDefault();
-      try {
-        const response = await createCard({
-          front: newCard.front,
-          back: newCard.back,
-        });
-        const createdCard = response;
-      } catch (error) {
-        console.error("There was an error reading the deck: ", error);
-      }
+  useEffect(() => {
+    const abortController = new AbortController()
+    async function loadDecks() {
+      const decksFromAPI = await readDeck(deckId, abortController.signal)
+      setDeck(decksFromAPI)
     }
+    loadDecks()
 
-  /*async function handleSave(event) {
+    return () =>  abortController.abort()
+}, [deckId])
+
+  async function handleSave(event) {
     event.preventDefault();
-    try {
-      const newCard = {
-        ...cards,
-        front: cards.front,
-        back: cards.back,
-      };
-      await createCard(deckId, newCard);
-      setCards(initialFormState);
-    } catch (error) {
-      console.error("Error saving card: ", error);
-    }
-  } */
+    setNewCard({...newCard, deckId: deckId})
+    createCard(deckId, newCard)
+    setNewCard(initialFormState)
+  }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setNewCard(prev => ({...prev, [name]: value}))
+  }
 
   const handleDone = () => {
     history.push(`/decks/${deckId}`);
-  };
+  }
 
   return (
     <div>
@@ -75,10 +65,38 @@ function AddCard() {
       </div>
       <AddCardForm 
         newCard={newCard} 
+        deckId={deckId}
         setNewCard={setNewCard} 
-    />
+        handleSave={handleSave}
+        handleChange={handleChange}
+      />
     </div>
   );
 }
 
 export default AddCard;
+
+    /*async function handleSave(event) {
+      event.preventDefault();
+      try {
+        const response = await createCard({
+          front: newCard.front,
+          back: newCard.back,
+        });
+        const createdCard = response;
+      } catch (error) {
+        console.error("There was an error reading the deck: ", error);
+      }
+    } */
+
+    /*try {
+      const newCard = {
+        front: newCard.front,
+        back: newCard.back,
+      };
+      await createCard(deckId, newCard);
+      setNewCard(initialFormState);
+      history.push(`decks/${deckId}`)
+    } catch (error) {
+      console.error("Error saving card: ", error);
+    } */

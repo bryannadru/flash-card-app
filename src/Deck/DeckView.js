@@ -68,8 +68,8 @@ function DeckView() {
     <div>
       <Route exact path="/">
         <div>
-          <div class="row">
-            <div class="col">
+          <div className="row">
+            <div className="col">
               <button
                 type="button"
                 onClick={handleClick}
