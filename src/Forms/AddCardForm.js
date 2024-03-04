@@ -11,7 +11,7 @@ import DeckView from "../Deck/DeckView";
     - heading 
 */
 
-function AddCardForm({ decks }) {
+function AddCardForm({ newCard, setNewCard, decks }) {
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -60,16 +60,5 @@ function AddCardForm({ decks }) {
   );
 }
 
-/* want this in the form file but not sure how to use handleDone and handleSave functions in this file 
-
-        <div>
-            <div className='row'>
-                <div className='col'>
-                    <button onClick={handleDone} className='btn btn-secondary text-left'>Done</button>
-                    <button onClick={handleSave} className='btn btn-primary text-left'>Save</button> 
-                    </div>
-                    </div>
-                </div>
-*/
 
 export default AddCardForm;

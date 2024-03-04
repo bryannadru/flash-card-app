@@ -6,7 +6,7 @@ import DeckView from "../Deck/DeckView";
 import CreateDeck from "../Deck/CreateDeck";
 import DeckStudy from "../Deck/DeckStudy";
 import EditDeck from "../Deck/EditDeck";
-import Deck from "../Deck/Deck";
+import Deck from "../Cards/Deck";
 import AddCard from "../Cards/AddCard";
 import EditCard from "../Cards/EditCard";
 

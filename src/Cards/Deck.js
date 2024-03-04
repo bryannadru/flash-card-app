@@ -3,13 +3,10 @@ import {
   useHistory,
   useParams,
   Link,
-  BrowserRouter as Router,
-  Switch,
-  Route,
 } from "react-router-dom";
 import { readDeck, deleteDeck, deleteCard, readCard } from "../utils/api/index";
-import DeckView from "./DeckView";
-import CardList from "../Cards/CardList";
+import DeckView from "../Deck/DeckView";
+import CardList from "./CardList";
 //import DeckStudy from './DeckStudy'
 //import DeckList from './DeckList'
 
@@ -29,7 +26,6 @@ function Deck() {
       try {
         const decksFromAPI = await readDeck(deckId, abortController.signal); // do we need readDeck or listDeck
         setDecks(decksFromAPI);
-
         //const cardsFromAPI = await readCard(cardId)
         //setCards(cardsFromAPI)
       } catch (error) {
@@ -46,18 +42,20 @@ function Deck() {
     return () => abortController.abort()
   }, []);
 
-  // delete a card  -- make sure this function is correct
-  const handleDelete = async(id) => {
+  // delete a deck 
+  const handleDelete = (id) => {
     if (
-      window.confirm("Delete this card? You will not be able to recover it.")
+      window.confirm(
+        "Do you really want to delete this deck? You will not be able to recover it."
+      )
     ) {
-      try {
-        await deleteCard(id);
-        setCards(currentCards => 
-          currentCards.filter(card => card.id !== id))
-      } catch (error) {
-          console.error('Error deleting card', error)
-      }
+      deleteDeck(id);
+      setDecks(currentDecks =>
+        // setDecks(decks => decks.filter(deck => deck.id !== id));
+        currentDecks.filter(deck => deck.id !== id)); 
+      // creates a new array with all decks that do not match id
+      // updates the state to not include deleted deck id
+      history.push("/");
     }
   };
 
@@ -70,7 +68,7 @@ function Deck() {
             <a href="/">Home</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
-            React Router {/* fix this  */}
+            {decks.name} {/* fix this  */}
           </li>
         </ol>
       </nav>
@@ -101,7 +99,11 @@ function Deck() {
         </div>
       </div>
       <div>
-        <CardList cards={cards}  setCards={setCards}  onDelete={handleDelete}/>
+        <CardList 
+        cards={cards}  
+        setCards={setCards}  
+        onDelete={handleDelete}
+        />
       </div>
     </div>
   );
