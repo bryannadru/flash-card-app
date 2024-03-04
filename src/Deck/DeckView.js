@@ -20,7 +20,7 @@ function DeckView() {
 
   // sets the deck useState --> parent state
   const [decks, setDecks] = useState([]);
-  const [cards, setCards] = useState([]);
+  //const [cards, setCards] = useState([]);
 
   useEffect(() => {
     const abortController = new AbortController();

@@ -5,9 +5,8 @@ import { deleteCard } from "../utils/api";
 import DeckView from "../Deck/DeckView";
 
 // REVIEWED AND REVISED
-function CardList() {
+function CardList({ cards, setCards }) {
   const history = useHistory();
-  const [cards, setCards] = useState([]);
 
   const handleDelete = async (id) => {
     if (
