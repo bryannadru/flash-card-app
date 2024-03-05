@@ -34,6 +34,7 @@ function AddCard() {
     setNewCard({...newCard, deckId: deckId})
     createCard(deckId, newCard)
     setNewCard(initialFormState)
+    history.push(`/decks/${deckId}`)
     console.log(newCard)
   }
 
@@ -49,21 +50,6 @@ function AddCard() {
   return (
     <div>
       <div>
-        <div className="row">
-          <div className="col">
-            <button
-              onClick={handleDone}
-              className="btn btn-secondary text-left">
-              Done
-            </button>
-            <button 
-                onClick={handleSave}
-                className="btn btn-primary text-left">
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
       <AddCardForm 
         newCard={newCard} 
         deckId={deckId}
@@ -71,6 +57,21 @@ function AddCard() {
         handleSave={handleSave}
         handleChange={handleChange}
       />
+        <div className="row">
+          <div className="col">
+            <button
+              onClick={handleDone}
+              className="btn btn-secondary text-left m-1">
+              Done
+            </button>
+            <button 
+                onClick={handleSave}
+                className="btn btn-primary text-left m-1">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

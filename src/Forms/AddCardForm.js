@@ -1,26 +1,21 @@
 import React from "react";
+import { useParams } from "react-router-dom"
 import AddCard from "../Cards/AddCard";
 import DeckView from "../Deck/DeckView";
 
 function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
 
+  const { deckId } = useParams()
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol clasName="breadcrumb">
-          <li className="breadcrumb-item">
-            <a href="/">Home</a>
-          </li>
-          <li className="breadcrumb-item">
-            <a href="#">{deck.name}</a>
-          </li>{" "}
-          {/*figure out how to get deck name */}
-          <li className="breadcrumb-item active" aria-current="page">
-            Add Card
-          </li>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item">Fix this</li>
+          <li class="breadcrumb-item active" aria-current="page">Add Card</li>
         </ol>
       </nav>
-      <h2>{deck.name}: Add Card</h2>
+      <h2>Fix this : Add Card</h2>
       <form onSubmit={handleSave}>
         <div className="row">
           <div className="col-12">
@@ -46,6 +41,7 @@ function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
                 id="back"
                 type="back"
                 name="back"
+                class="form-control"
                 placeholder="Back side of card"
                 value={newCard.back}
                 onChange={handleChange}>
