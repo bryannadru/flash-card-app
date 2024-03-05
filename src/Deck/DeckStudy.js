@@ -11,7 +11,7 @@ function DeckStudy({ restartTask }) {
     const { deckId, cardId } = useParams()
     const [cardIndex, setCardIndex] = useState(0)
     const [ cards, setCards ] = useState([])
-    const [ decks, setDecks ] = useState([])
+    const [decks, setDecks] = useState({ cards: [] })
 
     useEffect(() => {
         async function loadDecks() {
@@ -64,7 +64,7 @@ function DeckStudy({ restartTask }) {
                 <div className="card w-75">
                 <div className="card-body">
                     <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                    <p className="card-text">{cards.back}</p>
+                    <p className="card-text">{decks.cards.back}</p>
                     <button 
                     className="btn btn-secondary"
                     onClick={handleFlip}
@@ -83,7 +83,7 @@ function DeckStudy({ restartTask }) {
                     <div className="card w-75">
                     <div className="card-body">
                         <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                        <p className="card-text">{cards.front}</p>
+                        <p className="card-text">{decks.cards.front}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}

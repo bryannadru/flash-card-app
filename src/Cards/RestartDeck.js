@@ -2,23 +2,27 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import DeckStudy from "../Deck/DeckStudy";
 
-function RestartDeck({ cardIndex, setCardIndex}) {
+function RestartDeck() {
   const [isFinished, setIsFinished] = useState(false);
-  // const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [decks, setDecks] = useState({ cards: [] })
 
   const history = useHistory();
 
-  const finishTask = () => {
+  /*const finishTask = () => {
     setIsFinished(true);
-  };
+  }; */
 
   // go over this
   const restartTask = () => {
-    if (
-      window.confirm("Restart Cards? Click cancel to return to the home page.")
-    ) {
-      setIsFinished(false);
-      setCardIndex(0)
+    if (currentCardIndex >= decks.cards.length - 1) {
+      if (window.confirm("Restart Cards? Click cancel to return to the home page.")) {
+        setCurrentCardIndex(0)
+      } else {
+        history.push('/')
+      }
+    } else {
+      setCurrentCardIndex(currentCardIndex + 1)
     }
   };
 
