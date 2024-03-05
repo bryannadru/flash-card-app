@@ -34,7 +34,7 @@ function EditCard() {
       }
     }
     loadDecksAndCards();
-  }, [cardId]);
+  }, [cardId, deckId]);
 
   const handleCancel = () => {
     history.push(`/decks/${deckId}`);
