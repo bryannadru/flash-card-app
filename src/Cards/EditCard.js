@@ -19,7 +19,7 @@ function EditCard() {
   const history = useHistory();
   const { cardId, deckId } = useParams();
   const [decks, setDecks] = useState(deckId);
-  const [existingCard, setExistingCard] = useState(cardId);
+  const [existingCard, setExistingCard] = useState({ front: '', back: '' });
 
   useEffect(() => {
     async function loadDecksAndCards() {
@@ -37,11 +37,10 @@ function EditCard() {
   }, [cardId]);
 
   const handleCancel = () => {
-    history.push("deck/:deckId");
+    history.push(`/decks/${deckId}`);
   };
 
   const handleChange = (event) => {
-    event.preventDefault();
     setExistingCard({
       ...existingCard,
       name: event.target.value,
@@ -50,11 +49,6 @@ function EditCard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newCard = {
-      ...existingCard,
-      name: existingCard.front,
-      description: existingCard.back,
-    };
     updateCard(cardId, existingCard);
     history.push(`/decks/${deckId}`);
   };

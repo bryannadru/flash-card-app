@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  useHistory,
-  useParams,
-  Route,
-  Switch,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { readDeck, updateDeck } from "../utils/api/index";
-import DeckView from "./DeckView";
 
-// REVIEWED AND REVISED
 function EditDeck() {
   // change state
   const history = useHistory();
   const { deckId } = useParams();
 
-  const [existingDeck, setExistingDeck] = useState(deckId);
+  const [existingDeck, setExistingDeck] = useState({ name: '', description: '' });
 
   useEffect(() => {
     async function loadDeck() {
@@ -29,22 +21,15 @@ function EditDeck() {
   };
 
   // is this right
-  const handleChange = (event) => {
-    event.preventDefault();
+  const handleChange = (target) => {
     setExistingDeck({
       ...existingDeck,
-      name: event.target.value,
-    });
-  };
+      [target.name]: target.value 
+    })
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newDeck = {
-      //newDeck ??
-      ...existingDeck,
-      name: existingDeck.name,
-      description: existingDeck.description,
-    };
     updateDeck(deckId, existingDeck);
     history.push(`/decks/${deckId}`);
   };
@@ -100,7 +85,7 @@ function EditDeck() {
         class="btn btn-secondary m-1">
         Cancel
       </button>
-      <button onClick={handleSubmit} type="submit" class="btn btn-primary">
+      <button onSubmit={handleSubmit} type="submit" class="btn btn-primary">
         Submit
       </button>
     </div>

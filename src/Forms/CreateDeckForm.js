@@ -1,7 +1,15 @@
 import React from "react";
 import CreateDeck from "../Deck/CreateDeck";
 
-function CreateDeckForm() {
+function CreateDeckForm({ newDeck, setNewDeck }) {
+
+  const handleChange = (target) => {
+    setNewDeck((prevDeck) => ({
+      ...prevDeck,
+      [target.name]: target.value
+    }))
+  }
+
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -17,7 +25,7 @@ function CreateDeckForm() {
       <div>
         <h3>Create Deck</h3>
       </div>
-      <form>
+      <form onChange={handleChange}>
         <div class="form-group">
           <label for="name">Name</label>
           <input
@@ -25,6 +33,7 @@ function CreateDeckForm() {
             class="form-control"
             id="name"
             placeholder="Deck Name"
+            value={newDeck.value}
             required
           />
         </div>

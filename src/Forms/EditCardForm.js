@@ -28,7 +28,7 @@ function EditCardForm({ existingCard, handleCancel, handleChange, handleSubmit }
                         class="form-control" 
                         name="front"
                         id="front" 
-                        placeholder='hi'
+                        placeholder=''
                         value={existingCard.front}
                         onChange={handleChange}
                     />
@@ -40,7 +40,7 @@ function EditCardForm({ existingCard, handleCancel, handleChange, handleSubmit }
                         class="form-control" 
                         name="back"
                         id="back" 
-                        placeholder='hi' 
+                        placeholder='' 
                         value={existingCard.back}
                         onChange={handleChange}
                     />

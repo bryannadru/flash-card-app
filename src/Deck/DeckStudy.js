@@ -37,15 +37,13 @@ function DeckStudy({ restartTask }) {
     const handleNext = () => {
         if (cards && cardIndex < cards.length - 1) { 
             setCardIndex(cardIndex + 1)
+        } else {
+            return <RestartDeck restartTask={restartTask} />
         }
     }
 
     if (cards.length < 3) {
         return <NotEnoughCards cards={cards} />
-    }
-
-    if (cardIndex === cards.length) {
-        return <RestartDeck restartTask={restartTask} />
     }
 
     return (

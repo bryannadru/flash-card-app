@@ -40,7 +40,10 @@ function AddCard() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setNewCard(prev => ({...prev, [name]: value}))
+    setNewCard(prev => ({
+      ...prev, 
+      [name]: value
+    }))
   }
 
   const handleDone = () => {
