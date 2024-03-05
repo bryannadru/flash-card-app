@@ -24,10 +24,9 @@ function Deck() {
     const abortController = new AbortController()
     async function loadDecks() {
       try {
-        const decksFromAPI = await readDeck(deckId, abortController.signal); // do we need readDeck or listDeck
+        const decksFromAPI = await readDeck(deckId, abortController.signal);
         setDecks(decksFromAPI);
-        //const cardsFromAPI = await readCard(cardId)
-        //setCards(cardsFromAPI)
+        setCards(decksFromAPI.cards)
       } catch (error) {
         if (error.name === 'Aborted') {
           console.log('Aborted', deckId)
@@ -43,23 +42,20 @@ function Deck() {
   }, []);
 
   // delete a deck 
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
     if (
       window.confirm(
         "Do you really want to delete this deck? You will not be able to recover it."
       )
     ) {
-      deleteDeck(id);
+      await deleteDeck(id);
       setDecks(currentDecks =>
-        // setDecks(decks => decks.filter(deck => deck.id !== id));
         currentDecks.filter(deck => deck.id !== id)); 
-      // creates a new array with all decks that do not match id
-      // updates the state to not include deleted deck id
       history.push("/");
     }
   };
 
-  // const list all cards :
+  // list all cards :
   return (
     <div>
       <nav aria-label="breadcrumb">

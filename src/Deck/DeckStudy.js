@@ -6,17 +6,10 @@ import DeckList from './DeckList' // do i need
 import RestartDeck from './RestartDeck'
 import NotEnoughCards from '../Cards/NotEnoughCards'
 
-// REVISED AND REVIEWED -- need to look over 
 function DeckStudy() {
     const history = useHistory()
     const { deckId, cardId } = useParams()
     const [cardIndex, setCardIndex] = useState(0)
-
-    /* const initialFlashCardState = {
-        cardNumber: 1,
-        cardFlipped: false,
-        nextButton: false,
-      };  -- do i need this instead ?  */
     const [ cards, setCards ] = useState([])
     const [ decks, setDecks ] = useState([])
 
@@ -26,7 +19,7 @@ function DeckStudy() {
                 const decksFromAPI = await readDeck(deckId)
                 setDecks(decksFromAPI)
                 
-                const cardsFromAPI = await readCard(cardId)
+                const cardsFromAPI = decksFromAPI.cards
                 setCards(cardsFromAPI)
             } catch (error) {
                 console.error('Failed to load data', error)
@@ -53,7 +46,7 @@ function DeckStudy() {
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item"><a href="/">Home</a></li>
                     <li className="breadcrumb-item">
-                        <Link to={`/decks/:deckId`}>{decks.name}</Link>
+                        <Link to={`/decks/${deckId}`}>{decks.name}</Link>
                     </li> 
                     <li className="breadcrumb-item active" aria-current="page">Study</li>
                 </ol>
@@ -64,7 +57,7 @@ function DeckStudy() {
                 {flip ? ( 
                 <div className="card w-75">
                 <div className="card-body">
-                    <h5 className="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
+                    <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
                     <p className="card-text">{cards.back}</p>
                     <button 
                     className="btn btn-secondary"
@@ -84,7 +77,7 @@ function DeckStudy() {
                     <div className="card w-75">
                     <div className="card-body">
                         {/* need to adjust the numbers to active numbers */}
-                        <h5 className="card-title">Card {cardIndex + 1} of {cards.length + 1}</h5>
+                        <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
                         <p className="card-text">{decks.name}</p>
                         <button 
                         className="btn btn-secondary"
@@ -96,8 +89,8 @@ function DeckStudy() {
                 </div>
                 )}
             </div>
-            {/*{cardIndex === cards.length && <RestartDeck />}
-            {cards.length < 3 && <NotEnoughCards />} */}
+            {cardIndex === cards.length && <RestartDeck decks={decks} setDecks={setDecks} />}
+            {cards.length < 3 && <NotEnoughCards cards={cards} setCards={setCards} />}
         </div>
     )
 }

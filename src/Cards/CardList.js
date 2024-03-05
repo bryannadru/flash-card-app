@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { deleteCard } from "../utils/api";
-//import { ErrorBoundary } from 'react-error-boundary'
 import Deck from "./Deck"
 
-// REVIEWED AND REVISED
+
 function CardList({ cards, setCards }) {
   const history = useHistory();
 
@@ -14,7 +13,7 @@ function CardList({ cards, setCards }) {
         "Do you really want to delete this deck? You will not be able to recover it."
       )
     ) {
-      await deleteCard(id);
+      deleteCard(id);
 
       setCards((updatedCard) =>
         // setDecks(decks => decks.filter(deck => deck.id !== id));
