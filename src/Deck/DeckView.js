@@ -79,7 +79,11 @@ function DeckView() {
             </div>
           </div>
         </div>
-        <DeckList decks={decks}  setDecks={setDecks} onDelete={handleDelete} />
+        <DeckList 
+          decks={decks}  
+          setDecks={setDecks} 
+          onDelete={handleDelete} 
+        />
       </Route>
     </div>
   );

@@ -1,40 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useHistory, Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
-import { readDeck, readCard, updateCard } from '../utils/api/index'
-import DeckView from '../Deck/DeckView'
-import EditCardForm from '../Forms/EditCardForm'
+import React, { useState, useEffect } from "react";
+import {
+  useParams,
+  useHistory,
+  Link,
+  Switch,
+  Route,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import { readDeck, readCard, updateCard } from "../utils/api/index";
+import DeckView from "../Deck/DeckView";
+import EditCardForm from "../Forms/EditCardForm";
 //import DeckStudy from './Deck/DeckStudy'
 //import AddCard from './AddCard'
 
+// REVIEWED AND REVISED -- JUST NEED TO CONFIRM
 
-// REVIEWED AND REVISED -- JUST NEED TO CONFIRM 
+function EditCard() {
+  const history = useHistory();
+  const { cardId, deckId } = useParams();
+  const [decks, setDecks] = useState(deckId);
+  const [existingCard, setExistingCard] = useState(cardId);
 
-function EditCard({ decks, setDecks, cards, setCards }) {
+  useEffect(() => {
+    async function loadDecksAndCards() {
+      try {
+        const decksFromAPI = await readDeck(deckId);
+        setDecks(decksFromAPI);
 
-    const history = useHistory() 
-    const { cardId, deckId } = useParams()
-    // const [formData, setFormData] = useState(initialFormState) do i need this 
+        const cardsFromAPI = readCard(cardId);
+        setExistingCard(cardsFromAPI);
+      } catch (error) {
+        throw new Error(`Read deck had an error(${deckId}).`);
+      }
+    }
+    loadDecksAndCards();
+  }, [cardId]);
 
-    useEffect(() => {
-        async function loadDecksAndCards() {
-            try {
-                const decksFromAPI = await readDeck(deckId)
-                setDecks(decksFromAPI)
+  const handleCancel = () => {
+    history.push("deck/:deckId");
+  };
 
-                const cardsFromAPI = await readCard(cardId)
-                setCards(cardsFromAPI)
-            } catch (error) {
-                throw new Error(`Read deck had an error(${deckId}).`)
-            }
-        }
-        loadDecksAndCards()
-    }, [deckId, cardId])
+  const handleChange = (event) => {
+    event.preventDefault();
+    setExistingCard({
+      ...existingCard,
+      name: event.target.value,
+    });
+  };
 
-    return (
-        <div>
-            <p>hi</p>
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newCard = {
+      ...existingCard,
+      name: existingCard.front,
+      description: existingCard.back,
+    };
+    updateCard(cardId, existingCard);
+    history.push(`/decks/${deckId}`);
+  };
+
+  return (
+    <div>
+      <EditCardForm
+        existingCard={existingCard}
+        setExistingCard={setExistingCard}
+        decks={decks}
+        setDecks={setDecks}
+      />
+      <div>
+        <div className="row">
+          <div className="col">
+            <button
+              onClick={handleCancel}
+              className="btn btn-secondary text-left">
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="btn btn-primary text-left m-1">
+              Submit
+            </button>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default EditCard;

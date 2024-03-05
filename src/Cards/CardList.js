@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import { deleteCard } from "../utils/api";
-import Deck from "./Deck"
-
+import Deck from "./Deck";
 
 function CardList({ cards, setCards }) {
   const history = useHistory();
+  const { deckId, cardId } =useParams()
 
   const handleDelete = async (id) => {
     if (
@@ -29,13 +29,30 @@ function CardList({ cards, setCards }) {
         {cards.map((card) => (
           <div class="card w-75" key={card.id}>
             <div class="card-body">
-              <h5 class="card-title"></h5>
-              <p class="card-text">{card.front}</p>
-              <button
-                className="m-1 btn btn-danger float-right"
-                onClick={() => handleDelete(card.id)}>
-                Delete
-              </button>
+              <div className="container">
+                <div className="row">
+                  <div className="col">
+                    <p class="card-text">{card.front}</p>
+                    </div>
+                    <div className="col">
+                      <p class="card-text">{card.back}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <button
+                  className="m-1 btn btn-danger float-right m-1"
+                  onClick={() => handleDelete(card.id)}>
+                  Delete
+                </button>
+                <Link to={`/decks/${deckId}/cards/${cardId}/edit`}>
+                  <button className="btn btn-secondary float-right m-1">
+                    Edit
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         ))}

@@ -25,7 +25,7 @@ function EditDeck() {
   }, [deckId]);
 
   const handleCancel = () => {
-    history.push('deck/:deckId');
+    history.push(`/decks/${deckId}`);
   };
 
   // is this right
@@ -58,9 +58,8 @@ function EditDeck() {
             <a href="/">Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href="#">{existingDeck}</a>
-          </li>{" "}
-          {/* deckId.name ? */}
+            <a href='/decks/:deckId'>{existingDeck}</a>
+          </li>
           <li class="breadcrumb-item active" aria-current="page">
             Edit Deck
           </li>

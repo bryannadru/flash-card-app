@@ -3,10 +3,10 @@ import { useHistory, useParams, Link, BrowserRouter as Router, Route, Switch } f
 import { readDeck, readCard } from '../utils/api/index'
 import DeckView from './DeckView'
 import DeckList from './DeckList' // do i need 
-import RestartDeck from './RestartDeck'
+import RestartDeck from '../Cards/RestartDeck'
 import NotEnoughCards from '../Cards/NotEnoughCards'
 
-function DeckStudy() {
+function DeckStudy({ restartTask }) {
     const history = useHistory()
     const { deckId, cardId } = useParams()
     const [cardIndex, setCardIndex] = useState(0)
@@ -38,6 +38,14 @@ function DeckStudy() {
         if (cards && cardIndex < cards.length - 1) { 
             setCardIndex(cardIndex + 1)
         }
+    }
+
+    if (cards.length < 3) {
+        return <NotEnoughCards cards={cards} />
+    }
+
+    if (cardIndex === cards.length) {
+        return <RestartDeck restartTask={restartTask} />
     }
 
     return (
@@ -76,9 +84,8 @@ function DeckStudy() {
                 ) : (
                     <div className="card w-75">
                     <div className="card-body">
-                        {/* need to adjust the numbers to active numbers */}
                         <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                        <p className="card-text">{decks.name}</p>
+                        <p className="card-text">{cards.front}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}
@@ -89,8 +96,6 @@ function DeckStudy() {
                 </div>
                 )}
             </div>
-            {cardIndex === cards.length && <RestartDeck decks={decks} setDecks={setDecks} />}
-            {cards.length < 3 && <NotEnoughCards cards={cards} setCards={setCards} />}
         </div>
     )
 }

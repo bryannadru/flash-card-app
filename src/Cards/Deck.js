@@ -7,12 +7,8 @@ import {
 import { readDeck, deleteDeck, deleteCard, readCard } from "../utils/api/index";
 import DeckView from "../Deck/DeckView";
 import CardList from "./CardList";
-//import DeckStudy from './DeckStudy'
-//import DeckList from './DeckList'
 
-// REVIEWED AND REVISED
 // this is a desk view showing all CARDS in a deck
-// this file displays all info about a deck -- basically all cards in deck
 function Deck() {
   const { deckId, cardId } = useParams();
   const history = useHistory();
