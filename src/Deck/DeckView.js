@@ -2,16 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   useParams,
   useHistory,
 } from "react-router-dom";
 import { deleteDeck, listDecks } from "../utils/api/index";
 import DeckList from "./DeckList";
-import CreateDeck from "./CreateDeck";
-// need to add Routes in all files !!!!
-// first page listing all decks --> home page
-// this file needs to show a list of Decks !!!
 
 // this is parent component
 function DeckView() {
@@ -73,7 +68,7 @@ function DeckView() {
               <button
                 type="button"
                 onClick={handleClick}
-                className="m-2 btn btn-secondary float-left">
+                className="btn btn-secondary float-left m-2">
                 + Create Deck
               </button>
             </div>

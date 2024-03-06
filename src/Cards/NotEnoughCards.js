@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { readDeck } from "../utils/api";
 import DeckView from "../Deck/DeckView";
 import AddCard from "./AddCard";
 
 // REVIEWED -- might need to ask questions
-function NotEnoughCards({ cards, setCards, decks, setDecks }) {
-  const { cardId, deckId } = useParams();
+function NotEnoughCards({ cards, decks, setDecks }) {
+  const { deckId } = useParams();
   // const [hasEnoughCards, setHasEnoughCards] = useState(true)
 
   useEffect(() => {

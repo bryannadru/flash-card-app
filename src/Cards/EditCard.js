@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   useParams,
   useHistory,
-  Link,
-  Switch,
-  Route,
-  BrowserRouter as Router,
 } from "react-router-dom";
 import { readDeck, readCard, updateCard } from "../utils/api/index";
 import DeckView from "../Deck/DeckView";
@@ -16,21 +12,23 @@ import EditCardForm from "../Forms/EditCardForm";
 // REVIEWED AND REVISED -- JUST NEED TO CONFIRM
 
 function EditCard() {
+
   const history = useHistory();
   const { cardId, deckId } = useParams();
-  const [decks, setDecks] = useState(deckId);
+  const [decks, setDecks] = useState([]);
   const [existingCard, setExistingCard] = useState({ front: '', back: '' });
-
+  
   useEffect(() => {
     async function loadDecksAndCards() {
       try {
+        console.log(deckId)
         const decksFromAPI = await readDeck(deckId);
         setDecks(decksFromAPI);
 
-        const cardsFromAPI = readCard(cardId);
+        const cardsFromAPI = await readCard(cardId);
         setExistingCard(cardsFromAPI);
       } catch (error) {
-        throw new Error(`Read deck had an error(${deckId}).`);
+        console.error(`Read deck had an error(${deckId}).`, error);
       }
     }
     loadDecksAndCards();
@@ -41,16 +39,22 @@ function EditCard() {
   };
 
   const handleChange = (event) => {
+    const { name, value } = event.target
     setExistingCard({
-      ...existingCard,
-      name: event.target.value,
+      ...existingCard, // creates a new object with current properties of existingCard
+      [name] : value // used to update the property corresponding with 'name'
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    updateCard(cardId, existingCard);
-    history.push(`/decks/${deckId}`);
+    try {
+      await updateCard(existingCard);
+      console.log(existingCard)
+      history.push(`/decks/${deckId}`);
+    } catch(error) {
+      console.log('There was an error editing the card : ', error)
+    }
   };
 
   return (
@@ -60,23 +64,10 @@ function EditCard() {
         setExistingCard={setExistingCard}
         decks={decks}
         setDecks={setDecks}
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
+        handleChange={handleChange}
       />
-      <div>
-        <div className="row">
-          <div className="col">
-            <button
-              onClick={handleCancel}
-              className="btn btn-secondary text-left">
-              Cancel
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="btn btn-primary text-left m-1">
-              Submit
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

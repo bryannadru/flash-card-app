@@ -64,7 +64,7 @@ function DeckStudy({ restartTask }) {
                 <div className="card w-75">
                 <div className="card-body">
                     <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                    <p className="card-text">{decks.cards.back}</p>
+                    <p className="card-text">{cards[cardIndex].back}</p>
                     <button 
                     className="btn btn-secondary"
                     onClick={handleFlip}
@@ -83,7 +83,7 @@ function DeckStudy({ restartTask }) {
                     <div className="card w-75">
                     <div className="card-body">
                         <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                        <p className="card-text">{decks.cards.front}</p>
+                        <p className="card-text">{cards[cardIndex].front}</p>
                         <button 
                         className="btn btn-secondary"
                         onClick={handleFlip}

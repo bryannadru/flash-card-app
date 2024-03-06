@@ -3,11 +3,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { readDeck, updateDeck } from "../utils/api/index";
 
 function EditDeck() {
-  // change state
   const history = useHistory();
   const { deckId } = useParams();
 
-  const [existingDeck, setExistingDeck] = useState({ name: '', description: '' });
+  const [existingDeck, setExistingDeck] = useState([]);
 
   useEffect(() => {
     async function loadDeck() {
@@ -20,7 +19,6 @@ function EditDeck() {
     history.push(`/decks/${deckId}`);
   };
 
-  // is this right
   const handleChange = (target) => {
     setExistingDeck({
       ...existingDeck,
@@ -43,7 +41,7 @@ function EditDeck() {
             <a href="/">Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href='/decks/:deckId'>{existingDeck}</a>
+            <a href='/decks/:deckId'>fix </a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Edit Deck

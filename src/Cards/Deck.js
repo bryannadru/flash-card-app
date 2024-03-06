@@ -55,11 +55,11 @@ function Deck() {
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <a href="/">Home</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             {decks.name} {/* fix this  */}
           </li>
         </ol>
@@ -67,7 +67,7 @@ function Deck() {
       <h3>{decks.name}</h3> {/* deckId.name ?? */}
       <p>{decks.description}</p>
       <div>
-        <div class='row'>
+        <div className='row'>
       <Link to={`/decks/${deckId}/edit`}>
         <button className="btn btn-secondary m-1">Edit</button>
       </Link>
@@ -79,14 +79,14 @@ function Deck() {
       </Link>
       <button
         type="button"
-        onClick={handleDelete}
+        onDelete={handleDelete}
         className="btn btn-danger m-1 float-right">
           Delete
         </button>
         </div>
       </div>
       <div>
-        <div class='row'>
+        <div className='row'>
         <h2 className='p-2'>Cards</h2>
         </div>
       </div>

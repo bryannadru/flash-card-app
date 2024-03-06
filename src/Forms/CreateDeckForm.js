@@ -1,7 +1,7 @@
 import React from "react";
 import CreateDeck from "../Deck/CreateDeck";
 
-function CreateDeckForm({ newDeck, setNewDeck }) {
+function CreateDeckForm({ newDeck, setNewDeck, handleSubmit }) {
 
   const handleChange = (target) => {
     setNewDeck((prevDeck) => ({
@@ -13,11 +13,11 @@ function CreateDeckForm({ newDeck, setNewDeck }) {
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <a href="/">Home</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Create Deck
           </li>
         </ol>
@@ -25,23 +25,23 @@ function CreateDeckForm({ newDeck, setNewDeck }) {
       <div>
         <h3>Create Deck</h3>
       </div>
-      <form onChange={handleChange}>
-        <div class="form-group">
+      <form onSubmit={handleSubmit} onChange={handleChange}>
+        <div className="form-group">
           <label for="name">Name</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="name"
             placeholder="Deck Name"
             value={newDeck.value}
             required
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="description">Description</label>
           <textarea
             type="text"
-            class="form-control"
+            className="form-control"
             id="description"
             placeholder="Brief description of deck"
             required
