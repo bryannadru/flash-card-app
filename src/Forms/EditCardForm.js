@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom"
 import EditCard from "../Cards/EditCard"
 import DeckView from "../Deck/DeckView";
 
@@ -10,22 +11,10 @@ function EditCardForm({
   handleCancel,
 }) {
 
+  const { cardId } = useParams()
+
   return (
     <div>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <a href="/">Home</a>
-          </li>
-          <li className="breadcrumb-item">FIX</li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Edit Card: 
-          </li>
-        </ol>
-      </nav>
-      <div>
-        <h2>Edit Card</h2>
-      </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label for="front">Front</label>

@@ -12,11 +12,16 @@ import EditCardForm from "../Forms/EditCardForm";
 // REVIEWED AND REVISED -- JUST NEED TO CONFIRM
 
 function EditCard() {
-
+  
+  const initialCardState = {
+    id: "",
+    front: "",
+    back: "",
+  };
   const history = useHistory();
   const { cardId, deckId } = useParams();
   const [decks, setDecks] = useState([]);
-  const [existingCard, setExistingCard] = useState({ front: '', back: '' });
+  const [existingCard, setExistingCard] = useState(initialCardState);
   
   useEffect(() => {
     const abortController = new AbortController()
@@ -41,31 +46,37 @@ function EditCard() {
     history.push(`/decks/${deckId}`);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target
+  function handleChange({ target }) {
     setExistingCard({
-      ...existingCard, // creates a new object with current properties of existingCard
-      [name] : value // used to update the property corresponding with 'name'
+      ...existingCard,
+      [target.name]: target.value,
     });
-  };
+  }
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-    //console.log(front, back)
-    updateCard({
-        ...existingCard
-    })
-    .then((theCardUpdate) => history.push(`/decks/${decks.id}`))
-      /*try {
-      await updateCard(cardId, existingCard);
-      history.push(`/decks/${deckId}`);
-    } catch(error) {
-      console.log('There was an error editing the card : ', error)
-    }*/
+    const abortController = new AbortController();
+    const response = await updateCard({ ...existingCard }, abortController.signal);
+    history.push(`/decks/${deckId}`);
+    return response;
   }
 
   return (
     <div>
+            <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">FIX</li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Edit Card: {cardId}
+          </li>
+        </ol>
+      </nav>
+      <div>
+        <h2>Edit Card</h2>
+      </div>
       <EditCardForm
         existingCard={existingCard}
         setExistingCard={setExistingCard}
