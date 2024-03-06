@@ -3,16 +3,15 @@ import { useParams } from "react-router-dom"
 import AddCard from "../Cards/AddCard";
 import DeckView from "../Deck/DeckView";
 
-function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
+function AddCardForm({ newCard, handleChange, handleSave }) {
 
-  const { deckId } = useParams()
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item">Fix this</li>
-          <li class="breadcrumb-item active" aria-current="page">Add Card</li>
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item"><a href="/">Home</a></li>
+          <li className="breadcrumb-item">Fix this</li>
+          <li className="breadcrumb-item active" aria-current="page">Add Card</li>
         </ol>
       </nav>
       <h2>Fix this : Add Card</h2>
@@ -25,7 +24,7 @@ function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
                 id="front"
                 type="front"
                 name="front"
-                class="form-control"
+                className="form-control"
                 placeholder="Front side of card"
                 value={newCard.front}
                 onChange={handleChange}>
@@ -41,7 +40,7 @@ function AddCardForm({ newCard, setNewCard, deck, handleChange, handleSave }) {
                 id="back"
                 type="back"
                 name="back"
-                class="form-control"
+                className="form-control"
                 placeholder="Back side of card"
                 value={newCard.back}
                 onChange={handleChange}>

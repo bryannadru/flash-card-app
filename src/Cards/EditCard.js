@@ -36,7 +36,7 @@ function EditCard() {
 
     return () => abortController.abort()
   }, [deckId, cardId]);
-
+  
   const handleCancel = () => {
     history.push(`/decks/${deckId}`);
   };
@@ -51,14 +51,17 @@ function EditCard() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    try {
-      await updateCard(existingCard);
-      console.log(existingCard)
+    const abortController = new AbortController();
+    const response = await updateCard({ ...existingCard }, abortController.signal);
+    history.push(`/decks/${deckId}`);
+    return response;
+  };
+      /*try {
+      await updateCard(cardId, existingCard);
       history.push(`/decks/${deckId}`);
     } catch(error) {
       console.log('There was an error editing the card : ', error)
-    }
-  };
+    }*/
 
   return (
     <div>

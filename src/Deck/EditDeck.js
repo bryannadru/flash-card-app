@@ -9,10 +9,18 @@ function EditDeck() {
   const [existingDeck, setExistingDeck] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController()
     async function loadDeck() {
-      const deckFromAPI = await readDeck(deckId);
-      setExistingDeck(deckFromAPI);
+      try {
+        const deckFromAPI = await readDeck(deckId, abortController.signal);
+        setExistingDeck(deckFromAPI);
+      } catch (error) {
+        console.error('Something went wrong', error)
+      }
     }
+    loadDeck()
+
+    return () => abortController.abort()
   }, [deckId]);
 
   const handleCancel = () => {
@@ -30,9 +38,13 @@ function EditDeck() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateDeck(deckId, existingDeck); // deckId identifies deck that is updated
-    // existing deck is updated deck info 
-    history.push(`/decks/${deckId}`);
+    try {
+      updateDeck(deckId, existingDeck); // deckId identifies deck that is updated
+      // existing deck is updated deck info 
+      history.push(`/decks/${deckId}`);
+    } catch (error) {
+      console.error('There was an error editing the deck', error)
+    }
   };
 
   return (
@@ -43,7 +55,7 @@ function EditDeck() {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href='/decks/:deckId'>fix </a>
+            <a href={`/decks/${deckId}`}>{existingDeck.name} </a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Edit Deck
@@ -61,20 +73,18 @@ function EditDeck() {
             className="form-control"
             id="name"
             name="name"
-            placeholder="Deck" // figure out how to reference the deck description
-            value={existingDeck.name}
+            placeholder={existingDeck.name}
             onChange={handleChange}
           />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <input
+          <textarea
             type="text"
             className="form-control"
             id="back"
             name="description"
-            placeholder="Description of Deck" // figure out how to reference the deck description
-            value={existingDeck.description}
+            placeholder={existingDeck.description}
             onChange={handleChange}
           />
         </div>

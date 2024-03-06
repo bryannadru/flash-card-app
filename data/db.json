@@ -97,12 +97,6 @@
       "id": 17
     },
     {
-      "front": "hey",
-      "back": "hey",
-      "deckId": 3,
-      "id": 19
-    },
-    {
       "front": "",
       "back": "",
       "deckId": null,
@@ -131,6 +125,24 @@
       "back": "",
       "deckId": null,
       "id": 24
+    },
+    {
+      "front": "wemcvw",
+      "back": "wmcw",
+      "deckId": 3,
+      "id": 25
+    },
+    {
+      "front": "wk,fc[",
+      "back": "wefmcw",
+      "deckId": 3,
+      "id": 26
+    },
+    {
+      "front": "wmvc[w",
+      "back": "wow;e",
+      "deckId": 3,
+      "id": 27
     }
   ]
 }
