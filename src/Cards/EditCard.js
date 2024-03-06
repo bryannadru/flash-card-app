@@ -49,19 +49,20 @@ function EditCard() {
     });
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const abortController = new AbortController();
-    const response = await updateCard({ ...existingCard }, abortController.signal);
-    history.push(`/decks/${deckId}`);
-    return response;
-  };
+    //console.log(front, back)
+    updateCard({
+        ...existingCard
+    })
+    .then((theCardUpdate) => history.push(`/decks/${decks.id}`))
       /*try {
       await updateCard(cardId, existingCard);
       history.push(`/decks/${deckId}`);
     } catch(error) {
       console.log('There was an error editing the card : ', error)
     }*/
+  }
 
   return (
     <div>
