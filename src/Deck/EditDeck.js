@@ -19,31 +19,33 @@ function EditDeck() {
     history.push(`/decks/${deckId}`);
   };
 
+  // updates existingDeck state
   const handleChange = (target) => {
     setExistingDeck({
       ...existingDeck,
       [target.name]: target.value 
+      // the name and the value that is targeted during the change 
     })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateDeck(deckId, existingDeck);
+    updateDeck(deckId, existingDeck); // deckId identifies deck that is updated
+    // existing deck is updated deck info 
     history.push(`/decks/${deckId}`);
   };
 
-  // Route=/decks/:deckId/edit
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <a href="/">Home</a>
           </li>
-          <li class="breadcrumb-item">
+          <li className="breadcrumb-item">
             <a href='/decks/:deckId'>fix </a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Edit Deck
           </li>
         </ol>
@@ -52,11 +54,11 @@ function EditDeck() {
         <h1>Edit Deck</h1>
       </div>
       <form>
-        <div class="form-group">
+        <div className="form-group">
           <label for="name">Name</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="name"
             name="name"
             placeholder="Deck" // figure out how to reference the deck description
@@ -68,7 +70,7 @@ function EditDeck() {
           <label for="description">Description</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="back"
             name="description"
             placeholder="Description of Deck" // figure out how to reference the deck description
@@ -80,7 +82,7 @@ function EditDeck() {
       <button
         onClick={handleCancel}
         type="button"
-        class="btn btn-secondary m-1">
+        className="btn btn-secondary m-1">
         Cancel
       </button>
       <button onSubmit={handleSubmit} type="submit" class="btn btn-primary">

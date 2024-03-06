@@ -19,20 +19,23 @@ function EditCard() {
   const [existingCard, setExistingCard] = useState({ front: '', back: '' });
   
   useEffect(() => {
+    const abortController = new AbortController()
     async function loadDecksAndCards() {
       try {
-        console.log(deckId)
-        const decksFromAPI = await readDeck(deckId);
+        const decksFromAPI = await readDeck(deckId, abortController.signal);
         setDecks(decksFromAPI);
 
-        const cardsFromAPI = await readCard(cardId);
+        const cardsFromAPI = await readCard(cardId, abortController.signal);
         setExistingCard(cardsFromAPI);
       } catch (error) {
-        console.error(`Read deck had an error(${deckId}).`, error);
+        console.error('Something went wrong', error)
+        //console.error(`Read deck had an error(${deckId}).`, error);
       }
     }
     loadDecksAndCards();
-  }, [cardId, deckId]);
+
+    return () => abortController.abort()
+  }, [deckId, cardId]);
 
   const handleCancel = () => {
     history.push(`/decks/${deckId}`);
