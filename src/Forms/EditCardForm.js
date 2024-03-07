@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import EditCard from "../Cards/EditCard"
 import DeckView from "../Deck/DeckView";
 
@@ -11,6 +11,7 @@ function EditCardForm({
   handleCancel
 }) {
 
+  const history = useHistory()
 
   return (
     <div>
@@ -22,9 +23,8 @@ function EditCardForm({
             className="form-control"
             name="front"
             id="front"
-            placeholder={card.front}
+            handleChange={handleChange}
             value={card.front}
-            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -34,16 +34,14 @@ function EditCardForm({
             className="form-control"
             name="back"
             id="back"
-            placeholder=""
+            handleChange={handleChange}            
             value={card.back}
-            onChange={handleChange}
           />
         </div>
         <div className="row">
           <div className="col">
             <button
               type="button"
-              onClick={handleCancel}
               className="btn btn-secondary">
               Cancel
             </button>
