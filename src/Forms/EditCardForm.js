@@ -5,13 +5,12 @@ import DeckView from "../Deck/DeckView";
 
 // REVIEWED --> GO OVER HANDLESUBMIT & HANDLECANCEL
 function EditCardForm({
-  existingCard,
+  card,
   handleChange,
   handleSubmit,
-  handleCancel,
+  handleCancel
 }) {
 
-  const { cardId } = useParams()
 
   return (
     <div>
@@ -23,8 +22,8 @@ function EditCardForm({
             className="form-control"
             name="front"
             id="front"
-            placeholder={existingCard.front}
-            value={existingCard.front}
+            placeholder={card.front}
+            value={card.front}
             onChange={handleChange}
           />
         </div>
@@ -36,7 +35,7 @@ function EditCardForm({
             name="back"
             id="back"
             placeholder=""
-            value={existingCard.back}
+            value={card.back}
             onChange={handleChange}
           />
         </div>

@@ -55,9 +55,6 @@ function CreateDeck() {
 
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route path="/decks/new">
           <CreateDeckForm
             newDeck={newDeck}
             deckId={deckId}
@@ -65,7 +62,7 @@ function CreateDeck() {
             handleSubmit={handleSubmit}
             handleCancel={handleCancel}
             handleChange={handleChange}
-        />
+            />
             <button
               onClick={handleCancel}
               type="button"
@@ -78,9 +75,6 @@ function CreateDeck() {
               class="btn btn-primary">
               Submit
             </button>
-          </Route>
-        </Switch>
-      </Router>
     </div>
   );
 }

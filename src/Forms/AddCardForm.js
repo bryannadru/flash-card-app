@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
+import { readDeck } from "../utils/api";
 import AddCard from "../Cards/AddCard";
 import DeckView from "../Deck/DeckView";
 
 function AddCardForm({ newCard, handleChange, handleSave }) {
+  const { deckId } = useParams();
+  // const [hasEnoughCards, setHasEnoughCards] = useState(true)
+  const [ decks, setDecks] = useState([])
+  useEffect(() => {
+    async function loadDeck() {
+      const deckFromAPI = await readDeck(deckId);
+      setDecks(deckFromAPI);
+    }
+
+    loadDeck()
+  }, [deckId]);
 
   return (
     <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item"><a href="/">Home</a></li>
-          <li className="breadcrumb-item">Fix this</li>
+          <li className="breadcrumb-item">{decks?.name}</li>
           <li className="breadcrumb-item active" aria-current="page">Add Card</li>
         </ol>
       </nav>
-      <h2>Fix this : Add Card</h2>
+      <h2>{decks?.name} : Add Card</h2>
       <form onSubmit={handleSave}>
         <div className="row">
           <div className="col-12">

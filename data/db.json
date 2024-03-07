@@ -143,6 +143,24 @@
       "back": "wow;e",
       "deckId": 3,
       "id": 27
+    },
+    {
+      "front": "mp;",
+      "back": "k,]\np",
+      "deckId": 2,
+      "id": 28
+    },
+    {
+      "front": "weo[\nc",
+      "back": "wkw\ne",
+      "deckId": null,
+      "id": 29
+    },
+    {
+      "front": "eo[qmcf",
+      "back": "qekc",
+      "deckId": null,
+      "id": 30
     }
   ]
 }

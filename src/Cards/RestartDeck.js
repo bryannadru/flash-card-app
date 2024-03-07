@@ -1,44 +1,48 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { readDeck } from "../utils/api";
 import DeckStudy from "../Deck/DeckStudy";
 
-function RestartDeck() {
-  const [isFinished, setIsFinished] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [decks, setDecks] = useState({ cards: [] })
+function RestartDeck({ cards, cardIndex, setCardIndex }) {
 
   const history = useHistory();
+  const { deckId } = useParams();
+  const [ decks, setDecks] = useState([])
 
-  /*const finishTask = () => {
-    setIsFinished(true);
-  }; */
-
-  // go over this
-  const restartTask = () => {
-    if (currentCardIndex >= decks.cards.length - 1) {
-      if (window.confirm("Restart Cards? Click cancel to return to the home page.")) {
-        setCurrentCardIndex(0)
-      } else {
-        history.push('/')
-      }
-    } else {
-      setCurrentCardIndex(currentCardIndex + 1)
+  useEffect(() => {
+    async function loadDeck() {
+      const deckFromAPI = await readDeck(deckId);
+      setDecks(deckFromAPI);
     }
-  };
 
-  const handleCancel = () => {
-    history.push("/");
-  };
+    loadDeck()
+  }, [deckId]);
+
+  const restartDeck = () => {
+    if (cardIndex === cards.length) {
+      if (window.confirm('You have reached the end of this deck. Click Restart to study again or cancel to return home.')) {
+        setCardIndex(0)
+      }
+    }
+  }
+
+
+
+  /*const confirmRestart = () => {
+    // This function only confirms restart or navigates home.
+    if (window.confirm("Restart Cards? Click cancel to return to the home page.")) {
+      setCardIndex(0); // This should reset the state in the parent component.
+    } else {
+      history.push("/"); // Navigate home if they choose not to restart.
+    }
+  }; */
 
   return (
     <div>
-      {isFinished ? (
-        <button onClick={restartTask}>OK</button>
-      ) : (
-        <button type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-      )}
+      <h3>You have reached the end of the deck. Click Restart to the deck or click cancel to return home.</h3>
+      <button type="button" onClick={restartDeck}>
+        Restart
+      </button>
     </div>
   );
 }

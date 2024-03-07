@@ -1,4 +1,141 @@
 import React, { useState, useEffect } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { readDeck, readCard, updateCard } from "../utils/api/index";
+import EditCardForm from '../Forms/EditCardForm'
+
+function EditCard() {
+  const initialDeckState = {
+    id: "",
+    name: "",
+    description: "",
+  };
+  
+  const initialCardState = {
+    id: "",
+    front: "",
+    back: "",
+  };
+  
+  const [deck, setDeck] = useState(initialDeckState);
+  const [card, setCard] = useState(initialCardState);
+
+  const history = useHistory()
+  const { cardId, deckId } = useParams()
+  
+  useEffect(() => {
+    async function fetchData() {
+      const abortController = new AbortController()
+      try {
+        const deckResponse = await readDeck(deckId, abortController.signal)
+        const cardResponse = await readCard(cardId, abortController.signal)
+        setDeck(deckResponse)
+        setCard(cardResponse)
+      } catch (error) {
+        console.error('Something went wrong', error)
+      }
+      return () => abortController.abort()
+    }
+    fetchData()
+  }, [])
+
+  function handleChange({ target }) {
+    setCard({
+      ...card,
+      [target.name]: target.value,
+    });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const abortController = new AbortController()
+    const response = await updateCard({ ...card }, abortController.signal)
+    history.push(`/decks/${deckId}`)
+    return response
+  }
+
+  const handleCancel = () => {
+    history.push(`/decks/${deckId}`);
+  };
+
+  return (
+    <div>
+            <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">FIX</li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Edit Card: {cardId}
+          </li>
+        </ol>
+      </nav>
+      <div>
+        <h2>Edit Card</h2>
+      </div>
+      <EditCardForm
+        card={card}
+        setCard={setCard}
+        decks={deck}
+        setDecks={setDeck}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        handleCancel={handleCancel}
+      />
+    </div>
+  );
+}
+
+export default EditCard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*import React, { useState, useEffect } from "react";
 import {
   useParams,
   useHistory,
@@ -28,19 +165,22 @@ function EditCard() {
     async function loadDecksAndCards() {
       try {
         const decksFromAPI = await readDeck(deckId, abortController.signal);
-        setDecks(decksFromAPI);
-
         const cardsFromAPI = await readCard(cardId, abortController.signal);
+        setDecks(decksFromAPI);
         setExistingCard(cardsFromAPI);
       } catch (error) {
-        console.error('Something went wrong', error)
-        //console.error(`Read deck had an error(${deckId}).`, error);
+        //console.error('Something went wrong', error)
+        console.error(`Read deck had an error(${deckId}).`, error);
       }
     }
     loadDecksAndCards();
+  }, []);
+  useEffect(() => {
+    readDeck(deckId).then(setDecks);
+    readCard(cardId).then(setExistingCard);
+}, [deckId, cardId]); 
 
-    return () => abortController.abort()
-  }, [deckId, cardId]);
+
   
   const handleCancel = () => {
     history.push(`/decks/${deckId}`);
@@ -90,4 +230,4 @@ function EditCard() {
   );
 }
 
-export default EditCard;
+export default EditCard; */

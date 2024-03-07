@@ -4,22 +4,23 @@ import { readDeck } from "../utils/api";
 import DeckView from "../Deck/DeckView";
 import AddCard from "./AddCard";
 
-// REVIEWED -- might need to ask questions
-function NotEnoughCards({ cards, decks, setDecks }) {
+function NotEnoughCards({ cards }) {
   const { deckId } = useParams();
   // const [hasEnoughCards, setHasEnoughCards] = useState(true)
-
+  const [ decks, setDecks] = useState([])
   useEffect(() => {
     async function loadDeck() {
       const deckFromAPI = await readDeck(deckId);
       setDecks(deckFromAPI);
     }
+
+    loadDeck()
   }, [deckId]);
 
   return (
     <div>
-      <h1>: Study</h1>
-      <h2>Not enough cards.</h2>
+      <h1>{decks?.name}: Study</h1>
+      <h3>Not enough cards.</h3>
       <p>
         You need at least 3 cards to study. There are {cards.length} in this
         deck.
