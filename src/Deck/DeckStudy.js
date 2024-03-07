@@ -6,12 +6,14 @@ import DeckList from './DeckList' // do i need
 import RestartDeck from '../Cards/RestartDeck'
 import NotEnoughCards from '../Cards/NotEnoughCards'
 
+
 function DeckStudy({ restartTask }) {
     const history = useHistory()
     const { deckId, cardId } = useParams()
     const [cardIndex, setCardIndex] = useState(0)
     const [ cards, setCards ] = useState([])
     const [decks, setDecks] = useState({ cards: [] })
+    const [flip, setFlipped] = useState(false)
 
     useEffect(() => {
         async function loadDecks() {
@@ -28,8 +30,6 @@ function DeckStudy({ restartTask }) {
         loadDecks()
     }, [deckId, cardId]) 
 
-    const [flip, setFlipped] = useState(false)
-
     const handleFlip = () => {
         setFlipped(!flip)
     }
@@ -37,6 +37,7 @@ function DeckStudy({ restartTask }) {
     const handleNext = () => {
         if (cards && cardIndex < cards.length - 1) { 
             setCardIndex(cardIndex + 1)
+            setFlipped(false)
         } else {
             return <RestartDeck restartTask={restartTask} />
         }
@@ -59,40 +60,19 @@ function DeckStudy({ restartTask }) {
             </nav>
             <Link to={`/decks/${deckId}/study`}></Link>
             <h1>Study: {decks.name}</h1>
-            <div>
-                {flip ? ( 
-                <div className="card w-75">
+            <div className="card w-75">
                 <div className="card-body">
                     <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                    <p className="card-text">{cards[cardIndex].back}</p>
-                    <button 
-                    className="btn btn-secondary"
-                    onClick={handleFlip}
-                    >
-                    Flip
+                    <p className="card-text">{flip ? cards[cardIndex].back : cards[cardIndex].front}</p>
+                    <button className="btn btn-secondary" onClick={handleFlip}>
+                        Flip
                     </button>
-                    <button
-                    className="btn btn-primary m-1"
-                    onClick={handleNext}
-                    >
-                        Next
-                    </button>
-                    </div>
-                </div>
-                ) : (
-                    <div className="card w-75">
-                    <div className="card-body">
-                        <h5 className="card-title">Card {cardIndex + 1} of {cards.length}</h5>
-                        <p className="card-text">{cards[cardIndex].front}</p>
-                        <button 
-                        className="btn btn-secondary"
-                        onClick={handleFlip}
-                        >
-                            Flip
+                    {flip && (
+                        <button className="btn btn-primary m-1" onClick={handleNext}>
+                            Next
                         </button>
-                    </div>
+                    )}
                 </div>
-                )}
             </div>
         </div>
     )
