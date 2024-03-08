@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import { readDeck, readCard } from "../utils/api/index";
 import DeckView from "./DeckView";
-import RestartDeck from "../Cards/RestartDeck";
 import NotEnoughCards from "../Cards/NotEnoughCards";
 
 function DeckStudy({ restartTask }) {
@@ -74,7 +73,6 @@ function DeckStudy({ restartTask }) {
       </nav>
       <Link to={`/decks/${deckId}/study`}></Link>
       <h1>Study: {decks.name}</h1>
-      {!isComplete ? (
         <div className="card w-75">
           <div className="card-body">
             <h5 className="card-title">
@@ -93,9 +91,6 @@ function DeckStudy({ restartTask }) {
             )}
           </div>
         </div>
-      ) : (
-        <RestartDeck restartTask={restartTask} cards={cards} />
-      )}
     </div>
   );
 }

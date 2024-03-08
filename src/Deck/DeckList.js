@@ -3,7 +3,6 @@ import { Link, useParams, useHistory } from 'react-router-dom'
 import { deleteDeck } from "../utils/api/index";
 import DeckView from './DeckView'
 
-// REVIEWED AND REVISED 
 function DeckList({ decks, setDecks }) { // figure out the handle delete btn 
 
     const history = useHistory()
