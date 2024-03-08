@@ -1,7 +1,7 @@
 import React from "react";
 import CreateDeck from "../Deck/CreateDeck";
 
-function CreateDeckForm({ newDeck, handleSubmit, handleChange }) {
+function CreateDeckForm({ newDeck, handleSubmit, handleChange, handleCancel }) {
 
   return (
     <div>
@@ -44,6 +44,18 @@ function CreateDeckForm({ newDeck, handleSubmit, handleChange }) {
             onChange={handleChange}>
           </textarea>
         </div>
+        <button
+              onClick={handleCancel}
+              type="button"
+              className="btn btn-secondary m-1">
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="btn btn-primary">
+              Submit
+            </button>
       </form>
     </div>
   );
