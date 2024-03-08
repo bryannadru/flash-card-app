@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { createDeck } from "../utils/api/index";
 import CreateDeckForm from "../Forms/CreateDeckForm";
+import Layout from "../Layout/Header"
 
 // REVIEWED -- need to figure out is it is decks.name or newDeck.name
 function CreateDeck() {
