@@ -16,14 +16,13 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
             "Do you really want to delete this deck? You will not be able to recover it."
           )
         ) {
-          const response = await deleteDeck(id, abortController.signal);
+          await deleteDeck(id, abortController.signal);
           setDecks((updatedDeck) =>
             // setDecks(decks => decks.filter(deck => deck.id !== id));
             updatedDeck.filter((deck) => deck.id !== id)
           ); // creates a new array with all decks that do not match id
           // updates the state to not include deleted deck id
           history.push('/')
-          return response 
         }
         return () => abortController.abort()
       }
