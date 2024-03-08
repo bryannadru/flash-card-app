@@ -10,21 +10,23 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
     const { deckId } = useParams()
 
     const handleDelete = async (id) => {
+        const abortController = new AbortController()
         if (
           window.confirm(
             "Do you really want to delete this deck? You will not be able to recover it."
           )
         ) {
-          await deleteDeck(id);
-    
+          const response = await deleteDeck(id, abortController.signal);
           setDecks((updatedDeck) =>
             // setDecks(decks => decks.filter(deck => deck.id !== id));
             updatedDeck.filter((deck) => deck.id !== id)
           ); // creates a new array with all decks that do not match id
           // updates the state to not include deleted deck id
-          history.push("/");
+          history.push('/')
+          return response 
         }
-      };
+        return () => abortController.abort()
+      }
     
     if (Array.isArray(decks)) {
         return (
@@ -45,7 +47,7 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
                             </button>
                         </Link>
                         <button 
-                            className='m-1 btn btn-danger bi bi-trash3-fill float-right'
+                            className='m-1 btn btn-danger float-right'
                             onClick={() => handleDelete(deck.id)}>
                                 Delete
                         </button> 

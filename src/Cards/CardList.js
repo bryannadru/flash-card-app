@@ -4,7 +4,7 @@ import { deleteCard } from "../utils/api";
 import Deck from "./Deck";
 
 function CardList({ cards, setCards }) {
-  
+
   const history = useHistory();
   const { deckId, cardId } =useParams()
   const handleDelete = async (id) => {
@@ -19,7 +19,7 @@ function CardList({ cards, setCards }) {
         // updates the state to not include deleted deck id
         history.push("/");
       } catch (error) {
-        console.log('something went wrong', error)
+        console.log('Something went wrong', error)
       }
     }
   };
