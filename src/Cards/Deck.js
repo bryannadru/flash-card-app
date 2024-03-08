@@ -4,7 +4,7 @@ import {
   useParams,
   Link,
 } from "react-router-dom";
-import { readDeck, deleteDeck, deleteCard, readCard } from "../utils/api/index";
+import { readDeck, deleteDeck } from "../utils/api/index";
 import DeckView from "../Deck/DeckView";
 import CardList from "./CardList";
 
@@ -72,12 +72,14 @@ function Deck() {
       <Link to={`/decks/${deckId}/cards/new`}>
         <button className="btn btn-primary m-1">Add Cards</button>
       </Link>
+      <Link to={'/'}>
       <button
         type="button"
-        onDelete={handleDelete}
+        onClick={() => handleDelete(decks.id)}
         className="btn btn-danger m-1 float-right">
           Delete
         </button>
+        </Link>
         </div>
       </div>
       <div>

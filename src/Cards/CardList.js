@@ -7,6 +7,7 @@ function CardList({ cards, setCards }) {
 
   const history = useHistory();
   const { deckId, cardId } =useParams()
+
   const handleDelete = async (id) => {
     if (
       window.confirm("Do you really want to delete this deck? You will not be able to recover it.")) {

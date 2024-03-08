@@ -22,7 +22,7 @@ function DeckList({ decks, setDecks }) { // figure out the handle delete btn
             updatedDeck.filter((deck) => deck.id !== id)
           ); // creates a new array with all decks that do not match id
           // updates the state to not include deleted deck id
-          history.push('/')
+          history.go(0)
         }
         return () => abortController.abort()
       }

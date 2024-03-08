@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { readDeck } from "../utils/api";
 import AddCard from "../Cards/AddCard";
 import DeckView from "../Deck/DeckView";
@@ -40,6 +40,7 @@ function AddCardForm({ newCard, handleChange, handleSave }) {
                 placeholder="Front side of card"
                 value={newCard.front}
                 onChange={handleChange}>
+                required
               </textarea>
             </div>
           </div>
@@ -56,6 +57,7 @@ function AddCardForm({ newCard, handleChange, handleSave }) {
                 placeholder="Back side of card"
                 value={newCard.back}
                 onChange={handleChange}>
+                required
               </textarea>
             </div>
           </div>

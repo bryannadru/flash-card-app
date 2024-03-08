@@ -16,8 +16,8 @@
       "id": 3
     },
     {
-      "name": "ff",
-      "description": "ff",
+      "name": "bb",
+      "description": "bb",
       "id": 4
     }
   ],
@@ -167,9 +167,9 @@
       "id": 31
     },
     {
-      "front": "b",
-      "back": "x",
-      "deckId": 3,
+      "front": "",
+      "back": "",
+      "deckId": 4,
       "id": 32
     }
   ]

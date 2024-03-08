@@ -45,7 +45,11 @@ function DeckStudy({ restartTask }) {
       setCardIndex(cardIndex + 1);
       setFlipped(false);
     } else {
-      setIsComplete(true)
+        window.confirm(
+            "Click OK to restart the deck, or CANCEL to return to the homepage."
+          )
+            ? setCardIndex(() => 0)
+            : history.push("/");
     }
   };
 

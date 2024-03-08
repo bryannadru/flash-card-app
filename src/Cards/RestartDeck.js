@@ -7,16 +7,7 @@ function RestartDeck({ cards, cardIndex, setCardIndex }) {
 
   const history = useHistory();
   const { deckId } = useParams();
-  const [ decks, setDecks] = useState([])
 
-  useEffect(() => {
-    async function loadDeck() {
-      const deckFromAPI = await readDeck(deckId);
-      setDecks(deckFromAPI);
-    }
-
-    loadDeck()
-  }, [deckId]);
 
   const restartDeck = () => {
     if (cardIndex === cards.length) {
