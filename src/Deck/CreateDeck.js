@@ -24,8 +24,10 @@ function CreateDeck() {
   // handling the submission of the new deck
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log('deckId', deckId)
     setNewDeck({...newDeck, deckId: deckId})
-    createDeck(deckId, newDeck)
+    const response = createDeck(newDeck)
+    console.log(response)
     history.push(`/decks/${deckId}`)
     /*try {
       const response = await createDeck({
@@ -59,20 +61,19 @@ function CreateDeck() {
             newDeck={newDeck}
             deckId={deckId}
             setNewDeck={setNewDeck}
-            handleSubmit={handleSubmit}
             handleCancel={handleCancel}
             handleChange={handleChange}
             />
             <button
               onClick={handleCancel}
               type="button"
-              class="btn btn-secondary m-1">
+              className="btn btn-secondary m-1">
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               type="submit"
-              class="btn btn-primary">
+              className="btn btn-primary">
               Submit
             </button>
     </div>

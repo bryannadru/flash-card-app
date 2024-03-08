@@ -6,46 +6,47 @@ function EditDeck() {
   const history = useHistory();
   const { deckId } = useParams();
 
-  const [existingDeck, setExistingDeck] = useState([]);
+  const initialDeckState = {
+    id: "",
+    name: "",
+    description: "",
+  };
+  const [existingDeck, setExistingDeck] = useState(initialDeckState);
 
   useEffect(() => {
-    const abortController = new AbortController()
     async function loadDeck() {
+      const abortController = new AbortController();
       try {
         const deckFromAPI = await readDeck(deckId, abortController.signal);
         setExistingDeck(deckFromAPI);
       } catch (error) {
-        console.error('Something went wrong', error)
+        console.error("Something went wrong", error);
       }
+      return () => abortController.abort();
     }
-    loadDeck()
-
-    return () => abortController.abort()
-  }, [deckId]);
+    loadDeck();
+  }, []);
 
   const handleCancel = () => {
     history.push(`/decks/${deckId}`);
   };
 
   // updates existingDeck state
-  const handleChange = (target) => {
+  const handleChange = ({ target }) => {
     setExistingDeck({
       ...existingDeck,
-      [target.name]: target.value 
-      // the name and the value that is targeted during the change 
-    })
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    try {
-      updateDeck(deckId, existingDeck); // deckId identifies deck that is updated
-      // existing deck is updated deck info 
-      history.push(`/decks/${deckId}`);
-    } catch (error) {
-      console.error('There was an error editing the deck', error)
-    }
+      [target.name]: target.value,
+      // the name and the value that is targeted during the change
+    });
   };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const abortController = new AbortController();
+    const response = await updateDeck({ ...existingDeck }, abortController.signal);
+    history.push(`/decks/${deckId}`);
+    return response;
+  }
 
   return (
     <div>
@@ -65,7 +66,7 @@ function EditDeck() {
       <div>
         <h1>Edit Deck</h1>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label for="name">Name</label>
           <input
@@ -74,6 +75,7 @@ function EditDeck() {
             id="name"
             name="name"
             placeholder={existingDeck.name}
+            value={existingDeck.name}
             onChange={handleChange}
           />
         </div>
@@ -85,19 +87,20 @@ function EditDeck() {
             id="back"
             name="description"
             placeholder={existingDeck.description}
+            value={existingDeck.description}
             onChange={handleChange}
           />
         </div>
+        <button
+          onClick={handleCancel}
+          type="button"
+          className="btn btn-secondary m-1">
+          Cancel
+        </button>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </form>
-      <button
-        onClick={handleCancel}
-        type="button"
-        className="btn btn-secondary m-1">
-        Cancel
-      </button>
-      <button onSubmit={handleSubmit} type="submit" class="btn btn-primary">
-        Submit
-      </button>
     </div>
   );
 }

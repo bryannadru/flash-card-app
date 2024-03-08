@@ -78,7 +78,7 @@ function EditCard() {
             className="form-control"
             name="front"
             id="front"
-            handleChange={handleChange}
+            onChange={handleChange}
             value={card.front}
           />
         </div>
@@ -89,7 +89,7 @@ function EditCard() {
             className="form-control"
             name="back"
             id="back"
-            handleChange={handleChange}
+            onChange={handleChange}
             value={card.back}
           />
         </div>

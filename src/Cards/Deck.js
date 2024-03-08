@@ -24,12 +24,7 @@ function Deck() {
         setDecks(decksFromAPI);
         setCards(decksFromAPI.cards)
       } catch (error) {
-        if (error.name === 'Aborted') {
-          console.log('Aborted', deckId)
-        } else {
-          console.log(error)
-          throw error 
-        }
+        console.log('Something went wrong', error)
       }
     }
     loadDecks();
@@ -60,11 +55,11 @@ function Deck() {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            {decks.name} {/* fix this  */}
+            {decks.name}
           </li>
         </ol>
       </nav>
-      <h3>{decks.name}</h3> {/* deckId.name ?? */}
+      <h3>{decks.name}</h3>
       <p>{decks.description}</p>
       <div>
         <div className='row'>
