@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import DeckView from "../Deck/DeckView";
@@ -15,7 +15,6 @@ function Layout() {
     <div>
       <Header />
       <div className="container">
-        <Router>
           <Switch>
             <Route exact path="/">
               <DeckView />
@@ -42,7 +41,6 @@ function Layout() {
               <NotFound />
             </Route>
           </Switch>
-        </Router>
       </div>
     </div>
   );
