@@ -14,17 +14,12 @@
       "name": "test deck",
       "description": "test deck",
       "id": 3
-    },
-    {
-      "name": "bb",
-      "description": "bb",
-      "id": 4
     }
   ],
   "cards": [
     {
       "id": 1,
-      "front": "Differentiate between Real DOM and Virtual DOM. ",
+      "front": "Differentiate between Real DOM and Virtual DOM.",
       "back": "Virtual DOM updates are faster but do not directly update the HTML",
       "deckId": 1
     },
@@ -167,9 +162,9 @@
       "id": 31
     },
     {
-      "front": "",
-      "back": "",
-      "deckId": 4,
+      "front": "lkk[",
+      "back": ";,,",
+      "deckId": 1,
       "id": 32
     }
   ]

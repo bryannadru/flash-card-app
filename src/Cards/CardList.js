@@ -6,7 +6,7 @@ import Deck from "./Deck";
 function CardList({ cards, setCards }) {
 
   const history = useHistory();
-  const { deckId, cardId } =useParams()
+  const { deckId } =useParams()
 
   const handleDelete = async (id) => {
     if (

@@ -14,7 +14,7 @@ function DeckView() {
 
   // sets the deck useState --> parent state
   const [decks, setDecks] = useState([]);
-  //const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([])
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -23,6 +23,8 @@ function DeckView() {
         //console.log('hello')
         const decksFromAPI = await listDecks(deckId, abortController.signal);
         setDecks(decksFromAPI);
+        const cardsFromAPI = decksFromAPI.cards;
+        setCards(cardsFromAPI);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Aborted", deckId);
