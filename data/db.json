@@ -11,8 +11,8 @@
       "id": 2
     },
     {
-      "name": "test deck",
-      "description": "test deck",
+      "name": "ewkd",
+      "description": "wkwd",
       "id": 3
     }
   ],
@@ -162,9 +162,9 @@
       "id": 31
     },
     {
-      "front": "lkk[",
-      "back": ";,,",
-      "deckId": 1,
+      "front": "d",
+      "back": "d",
+      "deckId": 3,
       "id": 32
     }
   ]

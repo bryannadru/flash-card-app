@@ -20,7 +20,6 @@ function DeckView() {
     const abortController = new AbortController();
     async function loadDecks() {
       try {
-        //console.log('hello')
         const decksFromAPI = await listDecks(deckId, abortController.signal);
         setDecks(decksFromAPI);
         const cardsFromAPI = decksFromAPI.cards;
@@ -78,7 +77,7 @@ function DeckView() {
         <DeckList 
           decks={decks}  
           setDecks={setDecks} 
-          onDelete={handleDelete} 
+          handleDelete={handleDelete} 
         />
       </Route>
     </div>

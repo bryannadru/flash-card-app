@@ -30,17 +30,17 @@ function DeckList({ decks, setDecks }) {
     return (
       <div>
         {decks.map((deck) => (
-          <div class="card w-75" key={deck.id}>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title">{deck.name}</h5>
+          <div className="card w-75" key={deck.id}>
+            <div className="card-body">
+              <div className="row">
+                <div className="col">
+                  <h5 className="card-title">{deck.name}</h5>
                 </div>
                 <div>
                   <p className="float-right p-1"> {deck.cards?.length} cards</p>
                 </div>
               </div>
-              <p class="card-text">{deck.description}</p>
+              <p className="card-text">{deck.description}</p>
               <Link to={`/decks/${deck.id}`}>
                 <button className="m-1 btn btn-primary bi bi-eye text-left">
                   Study
