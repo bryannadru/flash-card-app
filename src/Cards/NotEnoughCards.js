@@ -7,18 +7,31 @@ import AddCard from "./AddCard";
 function NotEnoughCards({ cards }) {
   const { deckId } = useParams();
   // const [hasEnoughCards, setHasEnoughCards] = useState(true)
-  const [ decks, setDecks] = useState([])
+  const [decks, setDecks] = useState([]);
   useEffect(() => {
     async function loadDeck() {
       const deckFromAPI = await readDeck(deckId);
       setDecks(deckFromAPI);
     }
 
-    loadDeck()
+    loadDeck();
   }, [deckId]);
 
   return (
     <div>
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <a href="/">Home</a>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to={`/decks/${deckId}`}>{decks.name}</Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Study
+          </li>
+        </ol>
+      </nav>
       <h1>{decks?.name}: Study</h1>
       <h3>Not enough cards.</h3>
       <p>
