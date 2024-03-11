@@ -6,22 +6,17 @@ import Deck from "./Deck";
 function CardList({ cards, setCards }) {
 
   const history = useHistory();
-  const { deckId } =useParams()
+  const { deckId } = useParams()
 
   const handleDelete = async (id) => {
-    if (
-      window.confirm("Do you really want to delete this deck? You will not be able to recover it.")) {
-      try {
-        await deleteCard(id)
-        setCards((updatedCard) =>
-          // setDecks(decks => decks.filter(deck => deck.id !== id));
-          updatedCard.filter((card) => card.id !== id)
-        ); // creates a new array with all decks that do not match id
-        // updates the state to not include deleted deck id
-        history.push("/");
-      } catch (error) {
-        console.log('Something went wrong', error)
-      }
+    const confirmMessage = window.confirm(
+      "Do you really want to delete this card? You will not be able to recover it."
+    );
+
+    if (confirmMessage) {
+      deleteCard(id)
+      .then(history.push(`/decks/${deckId}`))
+      .then(window.location.reload());
     }
   };
 
@@ -29,15 +24,15 @@ function CardList({ cards, setCards }) {
     return (
       <div>
         {cards.map((card) => (
-          <div class="card w-75" key={card.id}>
-            <div class="card-body">
+          <div className="card w-75" key={card.id}>
+            <div className="card-body">
               <div className="container">
                 <div className="row">
                   <div className="col">
-                    <p class="card-text">{card.front}</p>
+                    <p className="card-text">{card.front}</p>
                     </div>
                     <div className="col">
-                      <p class="card-text">{card.back}</p>
+                      <p className="card-text">{card.back}</p>
                   </div>
                 </div>
               </div>
@@ -61,7 +56,6 @@ function CardList({ cards, setCards }) {
       </div>
     );
   }
-  return null;
 }
 
 export default CardList;
