@@ -33,8 +33,7 @@ function AddCard() {
     setNewCard({...newCard, deckId: deckId})
     createCard(deckId, newCard)
     setNewCard(initialFormState)
-    history.push(`/decks/${deckId}`)
-    console.log(newCard)
+    //history.push(`/decks/${deckId}`)
   }
 
   const handleChange = (event) => {
