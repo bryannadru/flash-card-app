@@ -47,17 +47,16 @@ function DeckView() {
     ) {
       deleteDeck(id);
       setDecks(currentDecks =>
-        // setDecks(decks => decks.filter(deck => deck.id !== id));
         currentDecks.filter(deck => deck.id !== id)); 
       // creates a new array with all decks that do not match id
       // updates the state to not include deleted deck id
-      history.push("/");
+      history.push("/")
     }
-  };
+  }
 
   const handleClick = () => {
     history.push("/decks/new");
-  };
+  }
 
   return (
     <div>
@@ -81,7 +80,7 @@ function DeckView() {
         />
       </Route>
     </div>
-  );
+  )
 }
 
 export default DeckView;

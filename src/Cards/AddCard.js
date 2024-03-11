@@ -10,7 +10,7 @@ function AddCard() {
 
   const initialFormState = {
     front: "",
-    back: "", // and back: '' ??
+    back: "",
   };
   let history = useHistory();
   const { deckId } = useParams();
@@ -33,7 +33,6 @@ function AddCard() {
     setNewCard({...newCard, deckId: deckId})
     createCard(deckId, newCard)
     setNewCard(initialFormState)
-    //history.push(`/decks/${deckId}`)
   }
 
   const handleChange = (event) => {
@@ -78,28 +77,3 @@ function AddCard() {
 }
 
 export default AddCard;
-
-    /* async function handleSave(event) {
-      event.preventDefault();
-      try {
-        const response = await createCard({
-          front: newCard.front,
-          back: newCard.back,
-        });
-        const createdCard = response;
-      } catch (error) {
-        console.error("There was an error reading the deck: ", error);
-      }
-    } */
-
-    /*try {
-      const newCard = {
-        front: newCard.front,
-        back: newCard.back,
-      };
-      await createCard(deckId, newCard);
-      setNewCard(initialFormState);
-      history.push(`decks/${deckId}`)
-    } catch (error) {
-      console.error("Error saving card: ", error);
-    } */
